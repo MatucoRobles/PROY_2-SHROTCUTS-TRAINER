@@ -1,8 +1,5 @@
+import { TrainerHome } from '@/features/training/components/TrainerHome';
+
 export default function HomePage() {
-  return (
-    <div>
-      <h1>Welcome to the Shortcuts Trainer!</h1>
-      <p>Select a training session to get started.</p>
-    </div>
-  );
+  return <TrainerHome />;
 }
