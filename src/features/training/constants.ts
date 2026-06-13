@@ -1,4 +1,4 @@
-import type { Shortcut } from '../types';
+import type { Shortcut } from './types';
 
 // Usamos una IIFE (Immediately Invoked Function Expression) o simplemente 
 // mapeamos el array si necesitamos ejecutar crypto.randomUUID() en runtime.

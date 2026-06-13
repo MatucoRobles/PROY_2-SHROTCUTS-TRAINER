@@ -1,0 +1,21 @@
+import { createBrowserRouter } from 'react-router';
+import HomePage from '@/pages/HomePage';
+import WindowsTraining from '@/pages/WindowsTraining';
+import ChromeTraining from '@/pages/ChromeTraining';
+import GeneralTraining from '@/pages/GeneralTraining';
+import VsCodeTraining from '@/pages/VsCodeTraining';
+import NotFoundPage from '@/pages/NotFoundPage';
+
+export const router = createBrowserRouter([
+  {
+    path: '/',
+    children: [
+      { index: true, Component: HomePage },
+      { path: 'general', Component: GeneralTraining },
+      { path: 'vscode', Component: VsCodeTraining },
+      { path: 'chrome', Component: ChromeTraining },
+      { path: 'windows', Component: WindowsTraining },
+      { path: '*', Component: NotFoundPage },
+    ],
+  },
+]);
