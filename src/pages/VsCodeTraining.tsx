@@ -1,9 +1,10 @@
+import { TrainingSession } from '@/features/training/components/TrainingSession';
 
 export default function VsCodeTraining() {
   return (
-    <div>
-      <h1>VS Code Training</h1>
-      <p>Welcome to the VS Code training!</p>
-    </div>
+    <TrainingSession
+      tool="VS Code"
+      description="Paleta de comandos, formateo, multi-cursor y navegación."
+    />
   );
 }

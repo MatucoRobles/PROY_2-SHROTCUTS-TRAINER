@@ -1,8 +1,10 @@
-export default function chromeTraining() {
+import { TrainingSession } from '@/features/training/components/TrainingSession';
+
+export default function ChromeTraining() {
   return (
-    <div>
-      <h1>Chrome Training</h1>
-      <p>Welcome to the Chrome training!</p>
-    </div>
+    <TrainingSession
+      tool="Chrome"
+      description="Pestañas, historial, descargas y modo incógnito."
+    />
   );
 }
