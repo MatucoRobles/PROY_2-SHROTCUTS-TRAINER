@@ -124,3 +124,17 @@ export function filterByTool(
 ): Shortcut[] {
   return shortcuts.filter((s) => s.tool === tool);
 }
+
+export function getAccuracy(correct: number, wrong: number): number {
+  const total = correct + wrong;
+  if (total === 0) return 0;
+  return Math.round((correct / total) * 100);
+}
+
+export function getAverageResponseTime(times: ReadonlyArray<number>):
+number {
+  if (times.length === 0) return 0;
+  const sum = times.reduce((acc, time) => acc + time, 0);
+  return Math.round(sum / times.length);
+}
+

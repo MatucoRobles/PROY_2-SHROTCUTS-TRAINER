@@ -32,13 +32,38 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
   const shortcuts = useShortcutStore((s) => s.shortcuts);
   const setCurrentShortcut = useShortcutStore((s) => s.setCurrentShortcut);
   const nextShortcut = useShortcutStore((s) => s.nextShortcut);
+  const recordAttempt = useShortcutStore((s) => s.recordAttempt);
+  const resetStats = useShortcutStore((s) => s.resetStats);
 
-  // El Integrante 2 (D2) conectará aquí la reacción a match/mismatch.
+  // D3 — cada sesión arranca en cero: reinicia al entrar (mount) y al
+  // salir (unmount). Cubre todos los sentidos: index → herramienta,
+  // herramienta → index y herramienta → otra herramienta.
+  useEffect(() => {
+    resetStats();
+    return () => resetStats();
+  }, [resetStats]);
+
+  // D3 — cronómetro: marca cuándo se mostró el atajo actual.
+  // Se reinicia cada vez que cambia currentShortcut.
+  const shownAtRef = useRef<number>(performance.now());
+  useEffect(() => {
+    shownAtRef.current = performance.now();
+  }, [currentShortcut]);
+
+  // D3 — registra el resultado que D2 detecta.
   useGlobalKeydown({
     shortcut: currentShortcut,
     enabled: currentShortcut !== null,
-    onMatch: () => {},
-    onMismatch: () => {},
+    onMatch: () => {
+      const elapsed = performance.now() - shownAtRef.current;
+      recordAttempt(true, elapsed);
+      nextShortcut(tool); // acierto → siguiente atajo
+    },
+    onMismatch: () => {
+      const elapsed = performance.now() - shownAtRef.current;
+      recordAttempt(false, elapsed);
+      // fallo → se queda el mismo atajo (reintentar). No rota.
+    },
   });
 
   // Inicializa / reinicia el atajo cuando cambia la herramienta.
