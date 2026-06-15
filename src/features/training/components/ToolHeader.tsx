@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { ChevronLeft, Keyboard } from 'lucide-react';
+import { ChevronLeft, Keyboard, BarChart2 } from "lucide-react";
 
 interface ToolHeaderProps {
   tool: string;
@@ -22,16 +22,28 @@ export function ToolHeader({ tool, description }: ToolHeaderProps) {
         Inicio
       </Link>
 
-      <div className="flex items-center gap-3">
-        <span className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/30 text-sky-400">
-          <Keyboard className="w-5 h-5" aria-hidden />
-        </span>
-        <div>
-          <h1 className="text-2xl font-bold text-slate-100">Entrenamiento · {tool}</h1>
-          {description && (
-            <p className="text-sm text-slate-400">{description}</p>
-          )}
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/30 text-sky-400">
+            <Keyboard className="w-5 h-5" aria-hidden />
+          </span>
+          <div>
+            <h1 className="text-2xl font-bold text-slate-100">
+              Entrenamiento · {tool}
+            </h1>
+            {description && (
+              <p className="text-sm text-slate-400">{description}</p>
+            )}
+          </div>
         </div>
+
+        <Link
+          to="/progress"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800 border border-slate-700 text-sm text-slate-300 hover:border-sky-500 hover:text-sky-400 transition-colors"
+        >
+          <BarChart2 className="w-4 h-4" aria-hidden />
+          Progreso
+        </Link>
       </div>
     </header>
   );
