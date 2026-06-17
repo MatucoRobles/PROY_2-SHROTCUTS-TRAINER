@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { Code, Globe, Keyboard, MonitorSmartphone, Layers, ArrowRight } from 'lucide-react';
+import { Code, Globe, Keyboard, MonitorSmartphone, Layers, ArrowRight, BarChart2 } from 'lucide-react';
 import { useShortcutStore } from '../useShortcutStore';
 import { cn } from '@/shared/utils/cn';
 
@@ -126,12 +126,25 @@ export function TrainerHome() {
           className="grid grid-cols-1 sm:grid-cols-2 gap-4"
         >
           {TOOLS.map((card) => (
-            <ToolTile key={card.tool} card={card} count={counts[card.tool] ?? 0} />
+            <ToolTile
+              key={card.tool}
+              card={card}
+              count={counts[card.tool] ?? 0}
+            />
           ))}
         </section>
 
-        <footer className="text-center text-xs text-slate-500">
-          {total} atajos cargados · persistencia local activa
+        <footer className="flex flex-col items-center gap-4">
+          <Link
+            to="/progress"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-800 border border-slate-700 text-sm text-slate-300 hover:border-sky-500 hover:text-sky-400 transition-colors"
+          >
+            <BarChart2 className="w-4 h-4" aria-hidden />
+            Ver mi progreso
+          </Link>
+          <p className="text-xs text-slate-500">
+            {total} atajos cargados · persistencia local activa
+          </p>
         </footer>
       </div>
     </main>

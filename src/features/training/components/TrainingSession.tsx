@@ -2,9 +2,14 @@ import { useEffect, useRef } from 'react';
 import { RotateCcw } from 'lucide-react';
 import { useShortcutStore } from '../useShortcutStore';
 import { useGlobalKeydown } from '../hooks/useGlobalKeydown';
+import { useFeedback } from '../hooks/useFeedback';  // ← nuevo para d5
 import { filterByTool, pickRandomShortcut } from '../utils';
 import { ShortcutCard } from './ShortcutCard';
 import { ToolHeader } from './ToolHeader';
+import { SessionStats } from './SessionStats';  // ← nuevo para d5
+import { cn } from '@/shared/utils/cn';  // ← nuevo para d5
+import { useProgressStore } from "../../progress/progressStore"; // ← nuevo para d5
+import { getAverageResponseTime } from "../utils"; // ← nuevo para d5
 
 interface TrainingSessionProps {
   tool: string;
@@ -34,14 +39,30 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
   const nextShortcut = useShortcutStore((s) => s.nextShortcut);
   const recordAttempt = useShortcutStore((s) => s.recordAttempt);
   const resetStats = useShortcutStore((s) => s.resetStats);
+  const { status, triggerCorrect, triggerWrong } = useFeedback(); // ← nuevo
+  const updateRecord = useProgressStore((s) => s.updateRecord); // ← nuevo para D5
 
   // D3 — cada sesión arranca en cero: reinicia al entrar (mount) y al
   // salir (unmount). Cubre todos los sentidos: index → herramienta,
   // herramienta → index y herramienta → otra herramienta.
   useEffect(() => {
     resetStats();
-    return () => resetStats();
-  }, [resetStats]);
+    return () => {
+      // Al salir, guarda el récord de la sesión. 
+      const state = useShortcutStore.getState();
+      updateRecord(tool, {
+        correct: state.correctAttempts,
+        wrong: state.wrongAttempts,
+        streak: state.currentStreak,
+        avgResponseTime: getAverageResponseTime(state.responseTimes),
+        masteredIds:
+          state.currentStreak >= 2
+            ? [state.currentShortcut?.id ?? ""].filter(Boolean)
+            : [],
+      });
+      resetStats();
+    };
+  }, [tool, resetStats, updateRecord]);
 
   // D3 — cronómetro: marca cuándo se mostró el atajo actual.
   // Se reinicia cada vez que cambia currentShortcut.
@@ -57,12 +78,14 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
     onMatch: () => {
       const elapsed = performance.now() - shownAtRef.current;
       recordAttempt(true, elapsed);
+      triggerCorrect(); // ← agregado para D5
       nextShortcut(tool); // acierto → siguiente atajo
     },
     onMismatch: () => {
       const elapsed = performance.now() - shownAtRef.current;
       recordAttempt(false, elapsed);
       // fallo → se queda el mismo atajo (reintentar). No rota.
+      triggerWrong(); // ← agregado para D5
     },
   });
 
@@ -94,8 +117,21 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
     <main className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-center p-6 gap-8">
       <ToolHeader tool={tool} description={description} />
 
-      <ShortcutCard shortcut={currentShortcut} />
-
+      <div // ← agregado para D5: contenedor del ShortcutCard que cambia su estilo según el feedback
+        className={cn(
+          "w-full max-w-2xl rounded-2xl transition-all duration-300",
+          status === "correct" &&
+            "ring-2 ring-emerald-500 shadow-[0_0_24px_2px_rgba(16,185,129,0.25)]",
+          status === "wrong" &&
+            "ring-2 ring-red-500 shadow-[0_0_24px_2px_rgba(239,68,68,0.25)]",
+        )}
+      >
+        <ShortcutCard shortcut={currentShortcut} />
+      </div>
+      <SessionStats
+        tool={tool}
+        totalShortcuts={filterByTool(shortcuts, tool).length}
+      />
       <button
         type="button"
         onClick={handleSkip}
@@ -104,11 +140,13 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
         <RotateCcw className="w-4 h-4" aria-hidden />
         Saltar atajo
       </button>
-
       <p className="text-xs text-slate-500 max-w-md text-center">
         Tip: si tu navegador intercepta la combinación (por ejemplo, Ctrl+S),
-        presiona <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700">Esc</kbd>
-        {' '}después de intentar para liberar la captura.
+        presiona{" "}
+        <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700">
+          Esc
+        </kbd>{" "}
+        después de intentar para liberar la captura.
       </p>
     </main>
   );

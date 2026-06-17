@@ -5,17 +5,19 @@ import ChromeTraining from '@/pages/ChromeTraining';
 import GeneralTraining from '@/pages/GeneralTraining';
 import VsCodeTraining from '@/pages/VsCodeTraining';
 import NotFoundPage from '@/pages/NotFoundPage';
+import ProgressPageRoute from "@/pages/ProgressPage";
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     children: [
       { index: true, Component: HomePage },
-      { path: 'general', Component: GeneralTraining },
-      { path: 'vscode', Component: VsCodeTraining },
-      { path: 'chrome', Component: ChromeTraining },
-      { path: 'windows', Component: WindowsTraining },
-      { path: '*', Component: NotFoundPage },
+      { path: "general", Component: GeneralTraining },
+      { path: "vscode", Component: VsCodeTraining },
+      { path: "chrome", Component: ChromeTraining },
+      { path: "windows", Component: WindowsTraining },
+      { path: "progress", Component: ProgressPageRoute },
+      { path: "*", Component: NotFoundPage },
     ],
   },
 ]);
