@@ -8,6 +8,9 @@ interface ShortcutState {
   shortcuts: Shortcut[];
   currentShortcut: Shortcut | null;
 
+  // D4 nivel seleccionado para filtrar
+  selectedLevel: number | null;
+
   // D3 — métricas
   correctAttempts: number;
   wrongAttempts: number;
@@ -16,6 +19,9 @@ interface ShortcutState {
 
   setCurrentShortcut: (shortcut: Shortcut | null) => void;
   nextShortcut: (tool?: string) => void;
+
+  // D4 acción para cambiar el nivel
+  setSelectedLevel: (level: number | null) => void;
 
   // D3 — acciones
   recordAttempt: (isCorrect: boolean, responseTimeMs: number) => void;
@@ -42,6 +48,7 @@ export const useShortcutStore = create<ShortcutState>()(
       // (el indexado [0] se asume no-undefined sin noUncheckedIndexedAccess).
       currentShortcut: (INITIAL_SHORTCUTS[0] ?? null) as Shortcut | null,
 
+      selectedLevel: null,
       correctAttempts: 0,
       wrongAttempts: 0,
       currentStreak: 0,
@@ -49,9 +56,14 @@ export const useShortcutStore = create<ShortcutState>()(
 
       setCurrentShortcut: (shortcut) => set({ currentShortcut: shortcut }),
 
+      // D4
+      setSelectedLevel: (level) => set({ selectedLevel: level }),
+
       nextShortcut: (tool) => {
-        const { shortcuts, currentShortcut } = get();
-        const pool = tool ? filterByTool(shortcuts, tool) : shortcuts;
+        const { shortcuts, currentShortcut, selectedLevel } = get();
+        let pool = shortcuts;
+        if (tool) pool = pool.filter(s => s.tool === tool);
+        if (selectedLevel !== null) pool = pool.filter(s => s.level === selectedLevel);
         const next = pickRandomShortcut(pool, currentShortcut?.id ?? null);
         set({ currentShortcut: next });
       },
@@ -78,7 +90,7 @@ export const useShortcutStore = create<ShortcutState>()(
     }),
     {
       name: 'shortcuts-trainer-storage',
-      version: 1,
+      version: 2,
     },
   ),
 );

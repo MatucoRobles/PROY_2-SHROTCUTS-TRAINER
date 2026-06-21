@@ -10,6 +10,7 @@ import { SessionStats } from './SessionStats';  // ← nuevo para d5
 import { cn } from '@/shared/utils/cn';  // ← nuevo para d5
 import { useProgressStore } from "../../progress/progressStore"; // ← nuevo para d5
 import { getAverageResponseTime } from "../utils"; // ← nuevo para d5
+import { LevelFilter } from './LevelFilter';  // ← para D4
 
 interface TrainingSessionProps {
   tool: string;
@@ -45,6 +46,9 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
   // D3 — cada sesión arranca en cero: reinicia al entrar (mount) y al
   // salir (unmount). Cubre todos los sentidos: index → herramienta,
   // herramienta → index y herramienta → otra herramienta.
+
+  const selectedLevel = useShortcutStore((s) => s.selectedLevel);
+
   useEffect(() => {
     resetStats();
     return () => {
@@ -89,16 +93,18 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
     },
   });
 
-  // Inicializa / reinicia el atajo cuando cambia la herramienta.
-  const lastToolRef = useRef<string | null>(null);
-  useEffect(() => {
-    if (lastToolRef.current === tool) return;
-    lastToolRef.current = tool;
-
-    const pool = filterByTool(shortcuts, tool);
-    const next = pickRandomShortcut(pool, null);
-    setCurrentShortcut(next);
-  }, [tool, shortcuts, setCurrentShortcut]);
+  // Inicializa / reinicia el atajo cuando cambia la herramienta o el nivel
+useEffect(() => {
+  const pool = filterByTool(shortcuts, tool);
+  
+  // D4: Si hay nivel seleccionado, filtra adicionalmente
+  const filteredPool = selectedLevel !== null
+    ? pool.filter(s => s.level === selectedLevel)
+    : pool;
+    
+  const next = pickRandomShortcut(filteredPool, null);
+  setCurrentShortcut(next);
+}, [tool, selectedLevel, shortcuts, setCurrentShortcut]);
 
   const handleSkip = () => nextShortcut(tool);
 
@@ -116,6 +122,8 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
   return (
     <main className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-center p-6 gap-8">
       <ToolHeader tool={tool} description={description} />
+
+      <LevelFilter /> {/* D4: Selector de nivel */}
 
       <div // ← agregado para D5: contenedor del ShortcutCard que cambia su estilo según el feedback
         className={cn(
