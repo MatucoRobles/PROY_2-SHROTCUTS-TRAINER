@@ -28,7 +28,7 @@ export function SessionStats({ totalShortcuts }: SessionStatsProps) {
   const hasStreak = currentStreak > 0;
 
   return (
-    <div className="w-full max-w-2xl mx-auto flex flex-col gap-3">
+    <div className="w-full max-w-4xl mx-auto flex flex-col gap-3">
       {/* Contador de progreso */}
       <p className="text-center text-xs text-slate-500 tabular-nums">
         {correctAttempts} / {totalShortcuts}

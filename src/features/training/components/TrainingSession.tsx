@@ -9,7 +9,7 @@ import { SessionStats } from './SessionStats';  // ← nuevo para d5
 import { cn } from '@/shared/utils/cn';  // ← nuevo para d5
 import { useProgressStore } from "../../progress/progressStore"; // ← nuevo para d5
 import { getAverageResponseTime, filterByTool } from "../utils"; // ← nuevo para d5
-import { LevelFilter } from './LevelFilter';  // ← para D4
+import { FilterBar } from './FilterBar';  // ← para D4
 
 interface TrainingSessionProps {
   tool: string;
@@ -35,6 +35,7 @@ interface TrainingSessionProps {
 export function TrainingSession({ tool, description }: TrainingSessionProps) {
   const currentShortcut = useShortcutStore((s) => s.currentShortcut);
   const shortcuts = useShortcutStore((s) => s.shortcuts);
+  const selectedLevel = useShortcutStore((s) => s.selectedLevel);
   const nextShortcut = useShortcutStore((s) => s.nextShortcut);
   const recordAttempt = useShortcutStore((s) => s.recordAttempt);
   const resetStats = useShortcutStore((s) => s.resetStats);
@@ -90,15 +91,20 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
   });
 
   // Inicializa / reinicia el atajo cuando cambia la herramienta o el nivel
-useEffect(() => {
-  nextShortcut(tool);
-}, [tool, nextShortcut]);
+  useEffect(() => {
+    nextShortcut(tool);
+  }, [tool, nextShortcut]);
+
+  // D4: Cuando cambia el nivel, cargar un shortcut del nuevo pool
+  useEffect(() => {
+    nextShortcut(tool);
+  }, [selectedLevel, tool, nextShortcut]);
 
   const handleSkip = () => nextShortcut(tool);
 
   if (!currentShortcut) {
     return (
-      <main className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-center p-6 gap-6">
+      <main className="min-h-screen w-full bg-slate-950 text-slate-100 flex flex-col items-center justify-center p-6 gap-6">
         <ToolHeader tool={tool} description={description} />
         <p className="text-slate-400">
           No hay atajos registrados para esta herramienta todavía.
@@ -108,10 +114,10 @@ useEffect(() => {
   }
 
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-center p-6 gap-8">
+    <main className="min-h-screen w-full bg-slate-950 text-slate-100 flex flex-col items-center p-6 gap-8">
       <ToolHeader tool={tool} description={description} />
 
-      <LevelFilter /> {/* D4: Selector de nivel */}
+      <FilterBar activeCategory={tool} />
 
       <div // ← agregado para D5: contenedor del ShortcutCard que cambia su estilo según el feedback
         className={cn(
