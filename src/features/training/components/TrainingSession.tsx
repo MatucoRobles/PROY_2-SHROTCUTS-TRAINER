@@ -3,13 +3,13 @@ import { RotateCcw } from 'lucide-react';
 import { useShortcutStore } from '../useShortcutStore';
 import { useGlobalKeydown } from '../hooks/useGlobalKeydown';
 import { useFeedback } from '../hooks/useFeedback';  // ← nuevo para d5
-import { filterByTool, pickRandomShortcut } from '../utils';
 import { ShortcutCard } from './ShortcutCard';
 import { ToolHeader } from './ToolHeader';
 import { SessionStats } from './SessionStats';  // ← nuevo para d5
 import { cn } from '@/shared/utils/cn';  // ← nuevo para d5
 import { useProgressStore } from "../../progress/progressStore"; // ← nuevo para d5
-import { getAverageResponseTime } from "../utils"; // ← nuevo para d5
+import { getAverageResponseTime, filterByTool } from "../utils"; // ← nuevo para d5
+import { FilterBar } from './FilterBar';  // ← para D4
 
 interface TrainingSessionProps {
   tool: string;
@@ -35,7 +35,7 @@ interface TrainingSessionProps {
 export function TrainingSession({ tool, description }: TrainingSessionProps) {
   const currentShortcut = useShortcutStore((s) => s.currentShortcut);
   const shortcuts = useShortcutStore((s) => s.shortcuts);
-  const setCurrentShortcut = useShortcutStore((s) => s.setCurrentShortcut);
+  const selectedLevel = useShortcutStore((s) => s.selectedLevel);
   const nextShortcut = useShortcutStore((s) => s.nextShortcut);
   const recordAttempt = useShortcutStore((s) => s.recordAttempt);
   const resetStats = useShortcutStore((s) => s.resetStats);
@@ -45,6 +45,7 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
   // D3 — cada sesión arranca en cero: reinicia al entrar (mount) y al
   // salir (unmount). Cubre todos los sentidos: index → herramienta,
   // herramienta → index y herramienta → otra herramienta.
+
   useEffect(() => {
     resetStats();
     return () => {
@@ -62,7 +63,7 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
       });
       resetStats();
     };
-  }, [tool, resetStats, updateRecord]);
+  }, [tool, resetStats, updateRecord, nextShortcut]);
 
   // D3 — cronómetro: marca cuándo se mostró el atajo actual.
   // Se reinicia cada vez que cambia currentShortcut.
@@ -89,22 +90,21 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
     },
   });
 
-  // Inicializa / reinicia el atajo cuando cambia la herramienta.
-  const lastToolRef = useRef<string | null>(null);
+  // Inicializa / reinicia el atajo cuando cambia la herramienta o el nivel
   useEffect(() => {
-    if (lastToolRef.current === tool) return;
-    lastToolRef.current = tool;
+    nextShortcut(tool);
+  }, [tool, nextShortcut]);
 
-    const pool = filterByTool(shortcuts, tool);
-    const next = pickRandomShortcut(pool, null);
-    setCurrentShortcut(next);
-  }, [tool, shortcuts, setCurrentShortcut]);
+  // D4: Cuando cambia el nivel, cargar un shortcut del nuevo pool
+  useEffect(() => {
+    nextShortcut(tool);
+  }, [selectedLevel, tool, nextShortcut]);
 
   const handleSkip = () => nextShortcut(tool);
 
   if (!currentShortcut) {
     return (
-      <main className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-center p-6 gap-6">
+      <main className="min-h-screen w-full bg-slate-950 text-slate-100 flex flex-col items-center justify-center p-6 gap-6">
         <ToolHeader tool={tool} description={description} />
         <p className="text-slate-400">
           No hay atajos registrados para esta herramienta todavía.
@@ -114,8 +114,10 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
   }
 
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-center p-6 gap-8">
+    <main className="min-h-screen w-full bg-slate-950 text-slate-100 flex flex-col items-center p-6 gap-8">
       <ToolHeader tool={tool} description={description} />
+
+      <FilterBar activeCategory={tool} />
 
       <div // ← agregado para D5: contenedor del ShortcutCard que cambia su estilo según el feedback
         className={cn(

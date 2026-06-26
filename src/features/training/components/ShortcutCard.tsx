@@ -34,7 +34,7 @@ export function ShortcutCard({ shortcut }: ShortcutCardProps) {
   return (
     <section
       aria-live="polite"
-      className="w-full max-w-2xl mx-auto flex flex-col items-center gap-8 bg-slate-900/70 p-10 rounded-2xl border border-slate-800 shadow-2xl backdrop-blur-sm"
+      className="w-full max-w-4xl mx-auto flex flex-col items-center gap-8 bg-slate-900/70 p-10 rounded-2xl border border-slate-800 shadow-2xl backdrop-blur-sm"
     >
       <p className="text-xs uppercase tracking-[0.3em] text-slate-500">
         Atajo a ejecutar
