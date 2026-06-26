@@ -1,9 +1,10 @@
 @import "tailwindcss";
 
 /*
- * Activa la variante `dark:bg-slate-950` cuando un ancestro tiene
- * la clase `.dark`. La clase se aplica/quita en `<html>` desde
- * `useThemeStore` (features/theme) y desde el script anti-FOUC
+ * Convención del proyecto: dark como base, light como override.
+ * Sin clase en `<html>` → modo oscuro (default).
+ * Con clase `.light` en `<html>` → activa las clases `light:foo`.
+ * La clase la gestiona `useThemeStore` y el script anti-FOUC
  * en `index.html`.
  */
-@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant light (&:where(.light, .light *));

@@ -13,9 +13,9 @@ const STORAGE_KEY = 'shortcuts-trainer-theme-storage';
 /**
  * Store global del tema. Default en `'dark'` para mantener el aspecto
  * actual del proyecto; la preferencia del usuario se persiste en
- * `localStorage` y se aplica como clase `.dark` en `<html>` para que
- * la variante `dark:` de Tailwind v4 (configurada en `index.css`)
- * entre en acción.
+ * `localStorage` y se aplica como clase `.light` en `<html>` cuando
+ * el modo es claro. Sin clase, la app se ve en dark (convención: dark
+ * como base, light como override; ver `index.css`).
  */
 export const useThemeStore = create<ThemeState>()(
   persist(
@@ -23,7 +23,7 @@ export const useThemeStore = create<ThemeState>()(
       mode: 'dark',
       toggle: () => {
         const next: ThemeMode = get().mode === 'dark' ? 'light' : 'dark';
-        document.documentElement.classList.toggle('dark', next === 'dark');
+        document.documentElement.classList.toggle('light', next === 'light');
         set({ mode: next });
       },
     }),

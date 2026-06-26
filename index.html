@@ -15,7 +15,7 @@
           if (raw) {
             try { mode = JSON.parse(raw).state.mode || 'dark'; } catch (e) {}
           }
-          if (mode === 'dark') document.documentElement.classList.add('dark');
+          if (mode === 'light') document.documentElement.classList.add('light');
         } catch (e) {}
       })();
     </script>
