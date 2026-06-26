@@ -104,9 +104,9 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
 
   if (!currentShortcut) {
     return (
-      <main className="min-h-screen w-full bg-slate-950 text-slate-100 flex flex-col items-center justify-center p-6 gap-6">
+      <main className="min-h-screen w-full bg-slate-950 light:bg-slate-50 text-slate-100 light:text-slate-900 flex flex-col items-center justify-center p-6 gap-6">
         <ToolHeader tool={tool} description={description} />
-        <p className="text-slate-400">
+        <p className="text-slate-400 light:text-slate-600">
           No hay atajos registrados para esta herramienta todavía.
         </p>
       </main>
@@ -114,7 +114,7 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
   }
 
   return (
-    <main className="min-h-screen w-full bg-slate-950 text-slate-100 flex flex-col items-center p-6 gap-8">
+    <main className="min-h-screen w-full bg-slate-950 light:bg-slate-50 text-slate-100 light:text-slate-900 flex flex-col items-center p-6 gap-8">
       <ToolHeader tool={tool} description={description} />
 
       <FilterBar activeCategory={tool} />
@@ -137,7 +137,7 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
       <button
         type="button"
         onClick={handleSkip}
-        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-700 text-slate-300 text-sm font-medium hover:border-sky-500 hover:text-sky-400 transition-colors"
+        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-700 light:border-slate-300 text-slate-300 light:text-slate-700 text-sm font-medium hover:border-sky-500 hover:text-sky-400 transition-colors"
       >
         <RotateCcw className="w-4 h-4" aria-hidden />
         Saltar atajo
@@ -145,7 +145,7 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
       <p className="text-xs text-slate-500 max-w-md text-center">
         Tip: si tu navegador intercepta la combinación (por ejemplo, Ctrl+S),
         presiona{" "}
-        <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700">
+        <kbd className="px-1.5 py-0.5 rounded bg-slate-800 light:bg-slate-200 border border-slate-700 light:border-slate-300">
           Esc
         </kbd>{" "}
         después de intentar para liberar la captura.

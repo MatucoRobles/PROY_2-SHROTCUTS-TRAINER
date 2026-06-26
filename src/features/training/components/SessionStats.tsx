@@ -57,7 +57,7 @@ export function SessionStats({ totalShortcuts }: SessionStatsProps) {
       </div>
 
       {/* Barra de precisión */}
-      <div className="bg-slate-800/60 rounded-xl border border-slate-700/50 px-4 py-3 flex flex-col gap-2">
+      <div className="bg-slate-800/60 light:bg-slate-200/60 rounded-xl border border-slate-700/50 light:border-slate-300/50 px-4 py-3 flex flex-col gap-2">
         <div className="flex justify-between items-center">
           <span className="text-[10px] uppercase tracking-widest text-slate-500">
             Precisión
@@ -66,16 +66,16 @@ export function SessionStats({ totalShortcuts }: SessionStatsProps) {
             className={cn(
               "text-sm font-semibold tabular-nums",
               accuracy === 100
-                ? "text-emerald-400"
+                ? "text-emerald-400 light:text-emerald-600"
                 : accuracy >= 70
-                  ? "text-sky-400"
-                  : "text-red-400",
+                  ? "text-sky-400 light:text-sky-600"
+                  : "text-red-400 light:text-red-600",
             )}
           >
             {accuracy}%
           </span>
         </div>
-        <div className="h-1.5 w-full bg-slate-700 rounded-full overflow-hidden">
+        <div className="h-1.5 w-full bg-slate-700 light:bg-slate-300 rounded-full overflow-hidden">
           <div
             role="progressbar"
             aria-valuenow={accuracy}
@@ -95,17 +95,17 @@ export function SessionStats({ totalShortcuts }: SessionStatsProps) {
       </div>
 
       {/* Racha actual */}
-      <div className="bg-slate-800/60 rounded-xl border border-slate-700/50 px-4 py-3 flex justify-between items-center">
+      <div className="bg-slate-800/60 light:bg-slate-200/60 rounded-xl border border-slate-700/50 light:border-slate-300/50 px-4 py-3 flex justify-between items-center">
         <span className="text-[10px] uppercase tracking-widest text-slate-500">
           Racha actual
         </span>
         {hasStreak ? (
-          <span className="flex items-center gap-1.5 text-orange-400 font-semibold text-sm">
+          <span className="flex items-center gap-1.5 text-orange-400 light:text-orange-600 font-semibold text-sm">
             <Flame className="w-4 h-4" aria-hidden />
             {currentStreak}
           </span>
         ) : (
-          <span className="text-slate-600 text-xs">— sin racha</span>
+          <span className="text-slate-600 light:text-slate-400 text-xs">— sin racha</span>
         )}
       </div>
     </div>

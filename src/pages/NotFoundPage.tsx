@@ -3,10 +3,10 @@ import { Home as HomeIcon } from 'lucide-react';
 
 export default function NotFoundPage() {
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-center gap-6 p-6 text-center">
-      <p className="text-7xl font-extrabold text-slate-700">404</p>
+    <main className="min-h-screen bg-slate-950 light:bg-slate-50 text-slate-100 light:text-slate-900 flex flex-col items-center justify-center gap-6 p-6 text-center">
+      <p className="text-7xl font-extrabold text-slate-700 light:text-slate-300">404</p>
       <h1 className="text-2xl font-semibold">Página no encontrada</h1>
-      <p className="text-slate-400 max-w-md">
+      <p className="text-slate-400 light:text-slate-600 max-w-md">
         La ruta que buscás no existe. Vuelve al inicio y elegí una
         herramienta para seguir entrenando.
       </p>

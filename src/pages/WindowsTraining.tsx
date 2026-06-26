@@ -21,16 +21,16 @@ export default function WindowsTraining() {
   const windowsShortcuts = filterByTool(shortcuts, 'Windows');
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-slate-950 light:bg-slate-50 text-slate-100 light:text-slate-900 flex flex-col">
       <header className="w-full px-6 py-3 flex items-center gap-2">
         <Link
           to="/"
-          className="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-sky-400 transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm text-slate-400 light:text-slate-600 hover:text-sky-400 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" aria-hidden />
           Inicio
         </Link>
-        <span className="text-slate-600 text-xs ml-2">
+        <span className="text-slate-600 light:text-slate-500 text-xs ml-2">
           Modo visual — el SO intercepta las combinaciones con la tecla Windows
         </span>
       </header>
