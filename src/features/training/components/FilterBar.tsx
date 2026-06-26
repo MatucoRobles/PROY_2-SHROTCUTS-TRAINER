@@ -46,10 +46,10 @@ export function FilterBar({ activeCategory }: FilterBarProps) {
   return (
     <div className="w-full px-6">
       {/* Contenedor con bordes superior e inferior */}
-      <div className="flex items-center gap-4 py-2.5 
-                      border-y border-slate-800/80
-                      bg-slate-900/30 backdrop-blur-sm">
-        
+      <div className="flex items-center gap-4 py-2.5
+                      border-y border-slate-800/80 light:border-slate-200
+                      bg-slate-900/30 light:bg-white/40 backdrop-blur-sm">
+
         {/* Bloque de Categorías */}
         <div className="flex items-center gap-2">
           {CATEGORIES.map((cat) => (
@@ -59,8 +59,8 @@ export function FilterBar({ activeCategory }: FilterBarProps) {
               className={cn(
                 'px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200',
                 activeCategory === cat.value
-                  ? 'bg-slate-800 border border-sky-500 text-sky-400 shadow-[0_0_12px_rgba(56,189,248,0.3)]'
-                  : 'bg-transparent border border-slate-700/50 text-slate-400 hover:border-slate-500 hover:text-slate-200'
+                  ? 'bg-slate-800 light:bg-sky-50 border border-sky-500 text-sky-400 light:text-sky-700 shadow-[0_0_12px_rgba(56,189,248,0.3)]'
+                  : 'bg-transparent border border-slate-700/50 light:border-slate-300 text-slate-400 light:text-slate-500 hover:border-slate-500 light:hover:border-slate-400 hover:text-slate-200 light:hover:text-slate-700'
               )}
             >
               {cat.label}
@@ -69,7 +69,7 @@ export function FilterBar({ activeCategory }: FilterBarProps) {
         </div>
 
         {/* Separador vertical */}
-        <span className="w-px h-6 bg-slate-700/60 flex-shrink-0" aria-hidden />
+        <span className="w-px h-6 bg-slate-700/60 light:bg-slate-300 flex-shrink-0" aria-hidden />
 
         {/* Bloque de Niveles */}
         <div className="flex items-center gap-2">
@@ -80,8 +80,8 @@ export function FilterBar({ activeCategory }: FilterBarProps) {
               className={cn(
                 'px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200',
                 selectedLevel === level.value
-                  ? 'bg-slate-700/80 border border-slate-500/70 text-slate-100'
-                  : 'bg-transparent border border-slate-700/50 text-slate-400 hover:border-slate-500 hover:text-slate-200'
+                  ? 'bg-slate-700/80 light:bg-slate-200 border border-slate-500/70 light:border-slate-400 text-slate-100 light:text-slate-900'
+                  : 'bg-transparent border border-slate-700/50 light:border-slate-300 text-slate-400 light:text-slate-500 hover:border-slate-500 light:hover:border-slate-400 hover:text-slate-200 light:hover:text-slate-700'
               )}
             >
               {level.label}
