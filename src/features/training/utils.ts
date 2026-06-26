@@ -74,6 +74,10 @@ export function normalizeKeydown(event: KeyboardEvent): Set<string> {
  * Compara un set de teclas presionadas (normalizadas) con el
  * `expectedCombo` de un `Shortcut`. Devuelve `true` si los dos sets son
  * estructuralmente iguales (mismo tamaño, mismas teclas, sin importar orden).
+ *
+ * Aplica el mismo `KEY_ALIASES` que `normalizeKeydown` a cada tecla del
+ * `expected`, de modo que `"Win"` matchee con `"Meta"` (que es como
+ * llega desde `event.metaKey`) y `"Cmd"` también, etc.
  */
 export function isMatchingCombo(
   pressed: ReadonlySet<string>,
@@ -81,7 +85,8 @@ export function isMatchingCombo(
 ): boolean {
   if (pressed.size !== expected.length) return false;
   for (const key of expected) {
-    if (!pressed.has(key)) return false;
+    const normalized = KEY_ALIASES[key] ?? key;
+    if (!pressed.has(normalized)) return false;
   }
   return true;
 }

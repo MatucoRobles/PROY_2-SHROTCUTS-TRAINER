@@ -13,8 +13,11 @@ interface ShortcutPracticeVisualProps {
  * Vista de práctica visual para atajos peligrosos.
  *
  * No captura teclas reales — usa botones para navegar entre atajos.
- * Ideal para aprender los atajos del sistema operativo sin riesgo
- * de ejecutarlos accidentalmente (Win+L, Alt+Tab, etc).
+ * Úselo para tools cuyos atajos son interceptados por el sistema
+ * operativo (tecla `Win`, `Alt+Tab` en algunos entornos) o por el
+ * navegador, donde `event.preventDefault()` no alcanza.
+ *
+ * Hoy se usa para la tool "Windows" (ver `pages/WindowsTraining.tsx`).
  */
 export function ShortcutPracticeVisual({
   shortcuts,

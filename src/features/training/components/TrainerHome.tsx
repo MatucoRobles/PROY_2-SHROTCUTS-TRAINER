@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { Code, Globe, Keyboard, MonitorSmartphone, Layers, ArrowRight, BarChart2 } from 'lucide-react';
+import { Code, Globe, Keyboard, MonitorSmartphone, Layers, ArrowRight, BarChart2, Eye } from 'lucide-react';
 import { useShortcutStore } from '../useShortcutStore';
 import { cn } from '@/shared/utils/cn';
 
@@ -10,6 +10,12 @@ interface ToolCard {
   icon: React.ComponentType<{ className?: string }>;
   path: string;
   accent: string;
+  /**
+   * Indica que esta tool se entrena en modo visual (sin captura de
+   * teclas) porque el SO o el navegador interceptan sus combinaciones
+   * antes de que el evento llegue a la app.
+   */
+  visual?: boolean;
 }
 
 const TOOLS: ReadonlyArray<ToolCard> = [
@@ -44,6 +50,7 @@ const TOOLS: ReadonlyArray<ToolCard> = [
     icon: MonitorSmartphone,
     path: '/windows',
     accent: 'text-amber-400',
+    visual: true,
   },
 ];
 
@@ -79,9 +86,17 @@ function ToolTile({ card, count }: ToolTileProps) {
         <p className="text-sm text-slate-400 mt-1">{card.description}</p>
       </div>
 
-      <span className="text-xs uppercase tracking-widest text-slate-500">
-        {count} {count === 1 ? 'atajo' : 'atajos'}
-      </span>
+      <div className="flex items-center gap-2">
+        <span className="text-xs uppercase tracking-widest text-slate-500">
+          {count} {count === 1 ? 'atajo' : 'atajos'}
+        </span>
+        {card.visual && (
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-[10px] uppercase tracking-widest">
+            <Eye className="w-3 h-3" aria-hidden />
+            Visual
+          </span>
+        )}
+      </div>
     </Link>
   );
 }

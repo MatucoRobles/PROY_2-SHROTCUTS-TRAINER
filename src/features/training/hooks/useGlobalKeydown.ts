@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { normalizeKeydown, shouldPreventDefault } from '../utils';
+import { isMatchingCombo, normalizeKeydown, shouldPreventDefault } from '../utils';
 import type { Shortcut } from '../types';
 
 interface UseGlobalKeydownOptions {
@@ -37,9 +37,7 @@ export function useGlobalKeydown({
       const pressed = normalizeKeydown(event);
       if (pressed.size === 0) return;
 
-      const matches =
-        pressed.size === shortcut.expectedCombo.length &&
-        shortcut.expectedCombo.every((k) => pressed.has(k));
+      const matches = isMatchingCombo(pressed, shortcut.expectedCombo);
 
       if (shouldPreventDefault(shortcut.expectedCombo)) {
         event.preventDefault();
