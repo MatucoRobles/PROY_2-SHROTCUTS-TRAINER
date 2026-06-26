@@ -21,7 +21,7 @@ export function GlobalAccuracyRing({ value }: GlobalAccuracyRingProps) {
           fill="none"
           stroke="currentColor"
           strokeWidth="8"
-          className="text-slate-800"
+          className="text-slate-800 light:text-slate-200"
         />
         <circle
           cx="60"
@@ -43,7 +43,7 @@ export function GlobalAccuracyRing({ value }: GlobalAccuracyRingProps) {
         </defs>
       </svg>
       <div className="absolute flex flex-col items-center">
-        <span className="text-4xl font-bold text-slate-100 tabular-nums">
+        <span className="text-4xl font-bold text-slate-100 light:text-slate-900 tabular-nums">
           {value}%
         </span>
         <span className="text-[10px] uppercase tracking-widest text-slate-500">

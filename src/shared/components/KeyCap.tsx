@@ -18,6 +18,10 @@ const VARIANT_STYLES: Record<KeyCapVariant, string> = {
  * Etiqueta visual minimalista que representa una tecla.
  *
  * - Soporta tema claro y oscuro para no chocar con el resto del UI.
+ *   Las variantes `light` y `dark` están diseñadas para verse bien
+ *   sobre fondo claro y oscuro respectivamente; el consumidor decide
+ *   cuál usar en función del tema (ej. `ShortcutCard` lee
+ *   `useThemeStore` y pasa el variant adecuado).
  * - `cn` resuelve conflictos de Tailwind cuando el consumidor pasa
  *   clases adicionales (regla 6 de las buenas prácticas implícitas).
  * - Renderiza como `<kbd>` por semántica de accesibilidad: un lector

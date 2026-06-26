@@ -8,10 +8,10 @@ import { cn } from "@/shared/utils/cn";
 import { GlobalAccuracyRing } from "./GlobalAccuracyRing";
 
 const TOOL_COLORS: Record<string, string> = {
-  General: "text-sky-400",
-  "VS Code": "text-violet-400",
-  Chrome: "text-emerald-400",
-  Windows: "text-yellow-400",
+  General: "text-sky-400 light:text-sky-600",
+  "VS Code": "text-violet-400 light:text-violet-600",
+  Chrome: "text-emerald-400 light:text-emerald-600",
+  Windows: "text-yellow-400 light:text-yellow-600",
 };
 
 const TOOL_ACCENT: Record<string, string> = {
@@ -34,26 +34,26 @@ export function ProgressPage() {
   const toolRows = Object.values(records);
 
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100 p-6 flex flex-col gap-8">
+    <main className="min-h-screen bg-slate-950 light:bg-slate-50 text-slate-100 light:text-slate-900 p-6 flex flex-col gap-8">
       {/* Header */}
       <header className="flex items-center gap-3">
         <button
           type="button"
           onClick={() => navigate(-1)}
-          className="hidden sm:flex items-center gap-1.5 text-slate-400 hover:text-slate-100 text-sm transition-colors"
+          className="hidden sm:flex items-center gap-1.5 text-slate-400 light:text-slate-600 hover:text-slate-100 light:hover:text-slate-900 text-sm transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           Atrás
         </button>
-        <Trophy className="w-5 h-5 text-yellow-400" aria-hidden />
+        <Trophy className="w-5 h-5 text-yellow-400 light:text-yellow-600" aria-hidden />
         <h1 className="text-lg font-semibold">Tu Progreso</h1>
       </header>
 
       {/* Layout principal */}
       <div className="flex flex-col lg:flex-row gap-6 items-stretch">
         {/* Tabla de récords por herramienta */}
-        <section className="lg:w-2/3 bg-slate-900/70 rounded-2xl border border-slate-800 overflow-hidden">
-          <div className="px-5 py-3 border-b border-slate-800">
+        <section className="lg:w-2/3 bg-slate-900/70 light:bg-white/80 rounded-2xl border border-slate-800 light:border-slate-200 overflow-hidden">
+          <div className="px-5 py-3 border-b border-slate-800 light:border-slate-200">
             <p className="text-[10px] uppercase tracking-widest text-slate-500">
               Récords por herramienta
             </p>
@@ -66,7 +66,7 @@ export function ProgressPage() {
           ) : (
             <table className="w-full text-sm">
               <thead>
-                <tr className="text-[10px] uppercase tracking-widest text-slate-500 border-b border-slate-800">
+                <tr className="text-[10px] uppercase tracking-widest text-slate-500 border-b border-slate-800 light:border-slate-200">
                   <th className="text-left px-4 py-2">Herramienta</th>
                   <th className="text-left px-3 py-2">Mejor T.</th>
                   <th className="text-left px-3 py-2">Racha</th>
@@ -84,17 +84,17 @@ export function ProgressPage() {
                   return (
                     <tr
                       key={record.tool}
-                      className="border-b border-slate-800/50 last:border-0 hover:bg-slate-800/30 transition-colors"
+                      className="border-b border-slate-800/50 light:border-slate-200 last:border-0 hover:bg-slate-800/30 light:hover:bg-slate-100 transition-colors"
                     >
                       <td
                         className={cn(
                           "px-4 py-4 font-medium",
-                          TOOL_COLORS[record.tool] ?? "text-slate-300",
+                          TOOL_COLORS[record.tool] ?? "text-slate-300 light:text-slate-700",
                         )}
                       >
                         {record.tool}
                       </td>
-                      <td className="px-3 py-4 text-slate-400 tabular-nums">
+                      <td className="px-3 py-4 text-slate-400 light:text-slate-600 tabular-nums">
                         <span className="flex items-center gap-1.5">
                           <Clock
                             className="w-3.5 h-3.5 text-sky-500"
@@ -104,7 +104,7 @@ export function ProgressPage() {
                         </span>
                       </td>
                       <td className="px-3 py-4 tabular-nums">
-                        <span className="flex items-center gap-1.5 text-orange-400">
+                        <span className="flex items-center gap-1.5 text-orange-400 light:text-orange-600">
                           <Flame className="w-3.5 h-3.5" aria-hidden />
                           {record.bestStreakever}
                         </span>
@@ -112,7 +112,7 @@ export function ProgressPage() {
                       {/* Oculta en mobile, visible desde sm */}
                       <td className="px-3 py-4 w-36 hidden sm:table-cell">
                         <div className="flex items-center gap-2">
-                          <div className="flex-1 h-1.5 bg-slate-700 rounded-full overflow-hidden">
+                          <div className="flex-1 h-1.5 bg-slate-700 light:bg-slate-300 rounded-full overflow-hidden">
                             <div
                               role="progressbar"
                               aria-valuenow={accuracy}
@@ -125,7 +125,7 @@ export function ProgressPage() {
                               style={{ width: `${accuracy}%` }}
                             />
                           </div>
-                          <span className="text-slate-400 tabular-nums text-xs w-8 text-right">
+                          <span className="text-slate-400 light:text-slate-600 tabular-nums text-xs w-8 text-right">
                             {accuracy}%
                           </span>
                         </div>
@@ -139,7 +139,7 @@ export function ProgressPage() {
         </section>
 
         {/* Círculo global */}
-        <section className="lg:w-1/3 bg-slate-900/70 rounded-2xl border border-slate-800 flex flex-col items-center justify-center gap-3 py-8">
+        <section className="lg:w-1/3 bg-slate-900/70 light:bg-white/80 rounded-2xl border border-slate-800 light:border-slate-200 flex flex-col items-center justify-center gap-3 py-8">
           <p className="text-[10px] uppercase tracking-widest text-slate-500">
             Precisión global
           </p>
@@ -153,7 +153,7 @@ export function ProgressPage() {
           <p className="text-[10px] uppercase tracking-widest text-slate-500">
             Atajos dominados
           </p>
-          <span className="text-sm text-emerald-400 font-semibold tabular-nums">
+          <span className="text-sm text-emerald-400 light:text-emerald-600 font-semibold tabular-nums">
             {totalMastered} / {totalShortcuts}
           </span>
         </div>
@@ -168,8 +168,8 @@ export function ProgressPage() {
                 className={cn(
                   "px-3 py-1.5 rounded-lg text-xs font-mono font-medium border transition-colors",
                   mastered
-                    ? "bg-emerald-500/10 border-emerald-500/40 text-emerald-400"
-                    : "bg-slate-800/60 border-slate-700/50 text-slate-600",
+                    ? "bg-emerald-500/10 light:bg-emerald-100 border-emerald-500/40 light:border-emerald-500/60 text-emerald-400 light:text-emerald-700"
+                    : "bg-slate-800/60 light:bg-slate-100 border-slate-700/50 light:border-slate-300 text-slate-600 light:text-slate-500",
                 )}
               >
                 {shortcut.expectedCombo
@@ -183,7 +183,7 @@ export function ProgressPage() {
       <button
         type="button"
         onClick={() => navigate(-1)}
-        className="flex sm:hidden items-center gap-1.5 text-slate-400 hover:text-slate-100 text-lg m-auto transition-colors self-start"
+        className="flex sm:hidden items-center gap-1.5 text-slate-400 light:text-slate-600 hover:text-slate-100 light:hover:text-slate-900 text-lg m-auto transition-colors self-start"
       >
         <ArrowLeft className="w-4 h-4" />
         Atrás
