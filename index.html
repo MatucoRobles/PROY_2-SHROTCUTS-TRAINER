@@ -7,6 +7,18 @@
     <title>proy-2-shrotcuts-trainer</title>
   </head>
   <body>
+    <script>
+      (function () {
+        try {
+          var raw = localStorage.getItem('shortcuts-trainer-theme-storage');
+          var mode = 'dark';
+          if (raw) {
+            try { mode = JSON.parse(raw).state.mode || 'dark'; } catch (e) {}
+          }
+          if (mode === 'dark') document.documentElement.classList.add('dark');
+        } catch (e) {}
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
