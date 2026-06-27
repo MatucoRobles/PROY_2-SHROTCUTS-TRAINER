@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { Shortcut } from './types';
 import { INITIAL_SHORTCUTS } from './constants';
-import { filterByTool, pickRandomShortcut } from './utils';
+import { pickRandomShortcut } from './utils';
 
 interface ShortcutState {
   shortcuts: Shortcut[];
