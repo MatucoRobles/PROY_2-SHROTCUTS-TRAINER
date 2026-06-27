@@ -3,6 +3,7 @@ import { ArrowLeft } from 'lucide-react';
 import { useShortcutStore } from '@/features/training/useShortcutStore';
 import { ShortcutPracticeVisual } from '@/features/training/components/ShortcutPracticeVisual';
 import { filterByTool } from '@/features/training/utils';
+import { useTranslation } from '@/features/translation/useTranslation';
 
 /**
  * Training de Windows en modo visual.
@@ -17,6 +18,7 @@ import { filterByTool } from '@/features/training/utils';
  * atajo por atajo con botones, sin riesgo de ejecutarlos.
  */
 export default function WindowsTraining() {
+  const { t } = useTranslation();
   const shortcuts = useShortcutStore((s) => s.shortcuts);
   const windowsShortcuts = filterByTool(shortcuts, 'Windows');
 
@@ -28,10 +30,10 @@ export default function WindowsTraining() {
           className="inline-flex items-center gap-1.5 text-sm text-slate-400 light:text-slate-600 hover:text-sky-400 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" aria-hidden />
-          Inicio
+          {t('Inicio')}
         </Link>
         <span className="text-slate-600 light:text-slate-500 text-xs ml-2">
-          Modo visual — el SO intercepta las combinaciones con la tecla Windows
+          {t('Modo visual — el SO intercepta las combinaciones con la tecla Windows')}
         </span>
       </header>
       <main className="flex-1 flex flex-col items-center justify-center p-6 gap-8">

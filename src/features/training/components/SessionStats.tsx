@@ -4,6 +4,7 @@ import { getAccuracy, getAverageResponseTime } from "../utils";
 import { formatResponseTime } from "../../progress/utils";
 import { cn } from "@/shared/utils/cn";
 import { StatCard } from "./StatCard";
+import { useTranslation } from "@/features/translation/useTranslation";
 
 interface SessionStatsProps {
   tool: string;
@@ -18,6 +19,7 @@ interface SessionStatsProps {
  * D5: este componente es responsabilidad del Integrante 5.
  */
 export function SessionStats({ totalShortcuts }: SessionStatsProps) {
+  const { t } = useTranslation();
   const correctAttempts = useShortcutStore((s) => s.correctAttempts);
   const wrongAttempts = useShortcutStore((s) => s.wrongAttempts);
   const currentStreak = useShortcutStore((s) => s.currentStreak);
@@ -37,19 +39,19 @@ export function SessionStats({ totalShortcuts }: SessionStatsProps) {
       {/* Cards: Aciertos / Errores / Tiempo */}
       <div className="grid grid-cols-3 gap-3">
         <StatCard
-          label="Aciertos"
+          label={t("Aciertos")}
           value={correctAttempts}
           icon={<Zap className="w-3.5 h-3.5" />}
           variant="correct"
         />
         <StatCard
-          label="Errores"
+          label={t("Errores")}
           value={wrongAttempts}
           icon={<X className="w-3.5 h-3.5" />}
           variant="wrong"
         />
         <StatCard
-          label="Tiempo prom."
+          label={t("Tiempo prom.")}
           value={formatResponseTime(avgTime === 0 ? null : avgTime)}
           icon={<Clock className="w-3.5 h-3.5" />}
           variant="neutral"
@@ -60,7 +62,7 @@ export function SessionStats({ totalShortcuts }: SessionStatsProps) {
       <div className="bg-slate-800/60 light:bg-slate-200/60 rounded-xl border border-slate-700/50 light:border-slate-300/50 px-4 py-3 flex flex-col gap-2">
         <div className="flex justify-between items-center">
           <span className="text-[10px] uppercase tracking-widest text-slate-500">
-            Precisión
+            {t("Precisión")}
           </span>
           <span
             className={cn(
@@ -97,7 +99,7 @@ export function SessionStats({ totalShortcuts }: SessionStatsProps) {
       {/* Racha actual */}
       <div className="bg-slate-800/60 light:bg-slate-200/60 rounded-xl border border-slate-700/50 light:border-slate-300/50 px-4 py-3 flex justify-between items-center">
         <span className="text-[10px] uppercase tracking-widest text-slate-500">
-          Racha actual
+          {t("Racha actual")}
         </span>
         {hasStreak ? (
           <span className="flex items-center gap-1.5 text-orange-400 light:text-orange-600 font-semibold text-sm">
@@ -105,7 +107,7 @@ export function SessionStats({ totalShortcuts }: SessionStatsProps) {
             {currentStreak}
           </span>
         ) : (
-          <span className="text-slate-600 light:text-slate-400 text-xs">— sin racha</span>
+          <span className="text-slate-600 light:text-slate-400 text-xs">{t("— sin racha")}</span>
         )}
       </div>
     </div>

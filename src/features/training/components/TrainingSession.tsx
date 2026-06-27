@@ -10,6 +10,7 @@ import { cn } from '@/shared/utils/cn';  // ← nuevo para d5
 import { useProgressStore } from "../../progress/progressStore"; // ← nuevo para d5
 import { getAverageResponseTime, filterByTool } from "../utils"; // ← nuevo para d5
 import { FilterBar } from './FilterBar';  // ← para D4
+import { useTranslation } from '@/features/translation/useTranslation';
 
 interface TrainingSessionProps {
   tool: string;
@@ -33,6 +34,7 @@ interface TrainingSessionProps {
  * - D5: feedback visual inmediato y récords personales.
  */
 export function TrainingSession({ tool, description }: TrainingSessionProps) {
+  const { t } = useTranslation();
   const currentShortcut = useShortcutStore((s) => s.currentShortcut);
   const shortcuts = useShortcutStore((s) => s.shortcuts);
   const selectedLevel = useShortcutStore((s) => s.selectedLevel);
@@ -107,7 +109,7 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
       <main className="min-h-screen w-full bg-slate-950 light:bg-slate-50 text-slate-100 light:text-slate-900 flex flex-col items-center justify-center p-6 gap-6">
         <ToolHeader tool={tool} description={description} />
         <p className="text-slate-400 light:text-slate-600">
-          No hay atajos registrados para esta herramienta todavía.
+          {t('No hay atajos registrados para esta herramienta todavía.')}
         </p>
       </main>
     );
@@ -140,15 +142,14 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
         className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-700 light:border-slate-300 text-slate-300 light:text-slate-700 text-sm font-medium hover:border-sky-500 hover:text-sky-400 transition-colors"
       >
         <RotateCcw className="w-4 h-4" aria-hidden />
-        Saltar atajo
+        {t('Saltar atajo')}
       </button>
       <p className="text-xs text-slate-500 max-w-md text-center">
-        Tip: si tu navegador intercepta la combinación (por ejemplo, Ctrl+S),
-        presiona{" "}
+        {t('Tip: si tu navegador intercepta la combinación (por ejemplo, Ctrl+S), presiona')}{" "}
         <kbd className="px-1.5 py-0.5 rounded bg-slate-800 light:bg-slate-200 border border-slate-700 light:border-slate-300">
           Esc
         </kbd>{" "}
-        después de intentar para liberar la captura.
+        {t('después de intentar para liberar la captura.')}
       </p>
     </main>
   );

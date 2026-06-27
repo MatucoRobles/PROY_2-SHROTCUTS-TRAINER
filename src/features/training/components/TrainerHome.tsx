@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import { Code, Globe, Keyboard, MonitorSmartphone, Layers, ArrowRight, BarChart2, Eye } from 'lucide-react';
 import { useShortcutStore } from '../useShortcutStore';
+import { useTranslation } from '@/features/translation/useTranslation';
 import { cn } from '@/shared/utils/cn';
 
 interface ToolCard {
@@ -60,6 +61,7 @@ interface ToolTileProps {
 }
 
 function ToolTile({ card, count }: ToolTileProps) {
+  const { t } = useTranslation();
   const Icon = card.icon;
   return (
     <Link
@@ -82,13 +84,13 @@ function ToolTile({ card, count }: ToolTileProps) {
       </div>
 
       <div>
-        <h3 className="text-lg font-semibold text-slate-100 light:text-slate-900">{card.title}</h3>
-        <p className="text-sm text-slate-400 light:text-slate-600 mt-1">{card.description}</p>
+        <h3 className="text-lg font-semibold text-slate-100 light:text-slate-900">{t(card.title)}</h3>
+        <p className="text-sm text-slate-400 light:text-slate-600 mt-1">{t(card.description)}</p>
       </div>
 
       <div className="flex items-center gap-2">
         <span className="text-xs uppercase tracking-widest text-slate-500">
-          {count} {count === 1 ? 'atajo' : 'atajos'}
+          {count} {count === 1 ? t('atajo') : t('atajos')}
         </span>
         {card.visual && (
           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-500/10 light:bg-amber-100 border border-amber-500/30 light:border-amber-500/50 text-amber-400 light:text-amber-700 text-[10px] uppercase tracking-widest">
@@ -110,6 +112,7 @@ function ToolTile({ card, count }: ToolTileProps) {
  * de atajos cambia (selector granular de Zustand).
  */
 export function TrainerHome() {
+  const { t } = useTranslation();
   const shortcuts = useShortcutStore((s) => s.shortcuts);
 
   const counts = shortcuts.reduce<Record<string, number>>((acc, s) => {
@@ -128,16 +131,17 @@ export function TrainerHome() {
             Shortcuts Trainer
           </span>
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
-            Memoriza atajos, no menus
+            {t('Memoriza atajos, no menus')}
           </h1>
           <p className="text-slate-400 light:text-slate-600 text-base max-w-xl mx-auto">
-            Practica combinaciones reales de tu editor, navegador y sistema
-            operativo. Tu progreso se guarda automáticamente.
+            {t(
+              'Practica combinaciones reales de tu editor, navegador y sistema operativo. Tu progreso se guarda automáticamente.',
+            )}
           </p>
         </header>
 
         <section
-          aria-label="Entrenamientos disponibles"
+          aria-label={t('Entrenamientos disponibles')}
           className="grid grid-cols-1 sm:grid-cols-2 gap-4"
         >
           {TOOLS.map((card) => (
@@ -155,10 +159,10 @@ export function TrainerHome() {
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-800 light:bg-white border border-slate-700 light:border-slate-300 text-sm text-slate-300 light:text-slate-700 hover:border-sky-500 light:hover:border-sky-500 hover:text-sky-400 light:hover:text-sky-600 transition-colors"
           >
             <BarChart2 className="w-4 h-4" aria-hidden />
-            Ver mi progreso
+            {t('Ver mi progreso')}
           </Link>
           <p className="text-xs text-slate-500">
-            {total} atajos cargados · persistencia local activa
+            {total} {t('atajos cargados · persistencia local activa')}
           </p>
         </footer>
       </div>

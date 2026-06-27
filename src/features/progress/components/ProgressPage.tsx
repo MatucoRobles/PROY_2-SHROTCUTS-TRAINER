@@ -6,6 +6,7 @@ import { getGlobalStats, formatResponseTime, isMastered } from "../utils";
 import { getAccuracy } from "../../training/utils";
 import { cn } from "@/shared/utils/cn";
 import { GlobalAccuracyRing } from "./GlobalAccuracyRing";
+import { useTranslation } from "@/features/translation/useTranslation";
 
 const TOOL_COLORS: Record<string, string> = {
   General: "text-sky-400 light:text-sky-600",
@@ -22,6 +23,7 @@ const TOOL_ACCENT: Record<string, string> = {
 };
 
 export function ProgressPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const records = useProgressStore((s) => s.records);
   const shortcuts = useShortcutStore((s) => s.shortcuts);
@@ -43,10 +45,10 @@ export function ProgressPage() {
           className="hidden sm:flex items-center gap-1.5 text-slate-400 light:text-slate-600 hover:text-slate-100 light:hover:text-slate-900 text-sm transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          Atrás
+          {t('Atrás')}
         </button>
         <Trophy className="w-5 h-5 text-yellow-400 light:text-yellow-600" aria-hidden />
-        <h1 className="text-lg font-semibold">Tu Progreso</h1>
+        <h1 className="text-lg font-semibold">{t('Tu Progreso')}</h1>
       </header>
 
       {/* Layout principal */}
@@ -55,23 +57,23 @@ export function ProgressPage() {
         <section className="lg:w-2/3 bg-slate-900/70 light:bg-white/80 rounded-2xl border border-slate-800 light:border-slate-200 overflow-hidden">
           <div className="px-5 py-3 border-b border-slate-800 light:border-slate-200">
             <p className="text-[10px] uppercase tracking-widest text-slate-500">
-              Récords por herramienta
+              {t('Récords por herramienta')}
             </p>
           </div>
 
           {toolRows.length === 0 ? (
             <p className="px-5 py-8 text-slate-500 text-sm text-center">
-              Completá al menos una sesión para ver tus récords.
+              {t('Completá al menos una sesión para ver tus récords.')}
             </p>
           ) : (
             <table className="w-full text-sm">
               <thead>
                 <tr className="text-[10px] uppercase tracking-widest text-slate-500 border-b border-slate-800 light:border-slate-200">
-                  <th className="text-left px-4 py-2">Herramienta</th>
-                  <th className="text-left px-3 py-2">Mejor T.</th>
-                  <th className="text-left px-3 py-2">Racha</th>
+                  <th className="text-left px-4 py-2">{t('Herramienta')}</th>
+                  <th className="text-left px-3 py-2">{t('Mejor T.')}</th>
+                  <th className="text-left px-3 py-2">{t('Racha')}</th>
                   <th className="text-left px-3 py-2 hidden sm:table-cell">
-                    Precisión
+                    {t('Precisión')}
                   </th>
                 </tr>
               </thead>
@@ -141,7 +143,7 @@ export function ProgressPage() {
         {/* Círculo global */}
         <section className="lg:w-1/3 bg-slate-900/70 light:bg-white/80 rounded-2xl border border-slate-800 light:border-slate-200 flex flex-col items-center justify-center gap-3 py-8">
           <p className="text-[10px] uppercase tracking-widest text-slate-500">
-            Precisión global
+            {t('Precisión global')}
           </p>
           <GlobalAccuracyRing value={globalAccuracy} />
         </section>
@@ -151,7 +153,7 @@ export function ProgressPage() {
       <section className="flex flex-col gap-3">
         <div className="flex justify-between items-center">
           <p className="text-[10px] uppercase tracking-widest text-slate-500">
-            Atajos dominados
+            {t('Atajos dominados')}
           </p>
           <span className="text-sm text-emerald-400 light:text-emerald-600 font-semibold tabular-nums">
             {totalMastered} / {totalShortcuts}
@@ -164,7 +166,7 @@ export function ProgressPage() {
             return (
               <span
                 key={shortcut.id}
-                title={shortcut.description}
+                title={t(shortcut.description)}
                 className={cn(
                   "px-3 py-1.5 rounded-lg text-xs font-mono font-medium border transition-colors",
                   mastered
@@ -186,7 +188,7 @@ export function ProgressPage() {
         className="flex sm:hidden items-center gap-1.5 text-slate-400 light:text-slate-600 hover:text-slate-100 light:hover:text-slate-900 text-lg m-auto transition-colors self-start"
       >
         <ArrowLeft className="w-4 h-4" />
-        Atrás
+        {t('Atrás')}
       </button>
     </main>
   );

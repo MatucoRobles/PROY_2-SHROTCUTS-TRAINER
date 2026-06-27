@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import { ArrowLeft, Keyboard, BarChart2 } from "lucide-react";
+import { useTranslation } from '@/features/translation/useTranslation';
 
 interface ToolHeaderProps {
   tool: string;
@@ -14,7 +15,8 @@ interface ToolHeaderProps {
  * - Título compacto dinámico "Entrenamiento · [Categoría]"
  * - Botón "Progreso" estilo píldora con efecto glass
  */
-export function ToolHeader({ tool, description }: ToolHeaderProps) {
+export function ToolHeader({ tool }: ToolHeaderProps) {
+  const { t } = useTranslation();
   return (
     <header className="w-full flex items-center justify-between gap-4 px-6 py-3">
       {/* Sección izquierda: Back + Separador + Icon + Título */}
@@ -25,7 +27,7 @@ export function ToolHeader({ tool, description }: ToolHeaderProps) {
           className="inline-flex items-center gap-1.5 text-sm text-slate-400 light:text-slate-600 hover:text-sky-400 light:hover:text-sky-600 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" aria-hidden />
-          <span className="hidden sm:inline">Inicio</span>
+          <span className="hidden sm:inline">{t('Inicio')}</span>
         </Link>
 
         {/* Separador sutil */}
@@ -38,7 +40,7 @@ export function ToolHeader({ tool, description }: ToolHeaderProps) {
 
         {/* Título dinámico */}
         <h1 className="text-lg font-semibold text-slate-100 light:text-slate-900">
-          Entrenamiento · <span className="text-sky-400 light:text-sky-600">{tool}</span>
+          {t('Entrenamiento')} · <span className="text-sky-400 light:text-sky-600">{tool}</span>
         </h1>
       </div>
 
@@ -53,7 +55,7 @@ export function ToolHeader({ tool, description }: ToolHeaderProps) {
                    shadow-[0_2px_8px_rgba(0,0,0,0.3)] light:shadow-[0_2px_8px_rgba(0,0,0,0.08)]"
       >
         <BarChart2 className="w-4 h-4" aria-hidden />
-        Progreso
+        {t('Progreso')}
       </Link>
     </header>
   );

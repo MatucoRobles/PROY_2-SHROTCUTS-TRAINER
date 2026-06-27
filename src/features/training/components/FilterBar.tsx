@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import { cn } from '@/shared/utils/cn';
 import { useShortcutStore } from '../useShortcutStore';
+import { useTranslation } from '@/features/translation/useTranslation';
 
 /**
  * Barra de filtros unificada para categorías y niveles.
@@ -40,6 +41,7 @@ interface FilterBarProps {
 }
 
 export function FilterBar({ activeCategory }: FilterBarProps) {
+  const { t } = useTranslation();
   const selectedLevel = useShortcutStore((s) => s.selectedLevel);
   const setSelectedLevel = useShortcutStore((s) => s.setSelectedLevel);
 
@@ -63,7 +65,7 @@ export function FilterBar({ activeCategory }: FilterBarProps) {
                   : 'bg-transparent border border-slate-700/50 light:border-slate-300 text-slate-400 light:text-slate-500 hover:border-slate-500 light:hover:border-slate-400 hover:text-slate-200 light:hover:text-slate-700'
               )}
             >
-              {cat.label}
+              {t(cat.label)}
             </Link>
           ))}
         </div>
@@ -84,7 +86,7 @@ export function FilterBar({ activeCategory }: FilterBarProps) {
                   : 'bg-transparent border border-slate-700/50 light:border-slate-300 text-slate-400 light:text-slate-500 hover:border-slate-500 light:hover:border-slate-400 hover:text-slate-200 light:hover:text-slate-700'
               )}
             >
-              {level.label}
+              {t(level.label)}
             </button>
           ))}
         </div>
