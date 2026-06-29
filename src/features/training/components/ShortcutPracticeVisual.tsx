@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ChevronLeft, ChevronRight, AlertTriangle } from 'lucide-react';
 import { ShortcutCard } from './ShortcutCard';
 import type { Shortcut } from '../types';
+import { useTranslation } from '@/features/translation/useTranslation';
 
 interface ShortcutPracticeVisualProps {
   shortcuts: Shortcut[];
@@ -24,6 +25,7 @@ export function ShortcutPracticeVisual({
   title,
   description,
 }: ShortcutPracticeVisualProps) {
+  const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = () => {
@@ -39,7 +41,7 @@ export function ShortcutPracticeVisual({
   if (shortcuts.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-slate-950 light:bg-slate-50 text-slate-400 light:text-slate-600 p-6">
-        <p>No hay atajos para mostrar.</p>
+        <p>{t('No hay atajos para mostrar.')}</p>
       </div>
     );
   }
@@ -50,9 +52,9 @@ export function ShortcutPracticeVisual({
     <main className="min-h-screen bg-slate-950 light:bg-slate-50 text-slate-100 light:text-slate-900 flex flex-col items-center justify-center p-6 gap-8">
       {/* Header */}
       <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold">{title}</h1>
+        <h1 className="text-3xl font-bold">{t(title)}</h1>
         {description && (
-          <p className="text-slate-400 light:text-slate-600 text-base">{description}</p>
+          <p className="text-slate-400 light:text-slate-600 text-base">{t(description)}</p>
         )}
       </div>
 
@@ -60,11 +62,11 @@ export function ShortcutPracticeVisual({
       <div className="flex items-start gap-3 bg-amber-900/20 light:bg-amber-50 border border-amber-600/40 light:border-amber-500/40 rounded-xl px-5 py-4 max-w-xl">
         <AlertTriangle className="w-5 h-5 text-amber-400 light:text-amber-600 shrink-0 mt-0.5" aria-hidden />
         <div className="text-sm text-amber-200 light:text-amber-900 leading-relaxed">
-          <p className="font-semibold">⚠️ Estos atajos son peligrosos</p>
+          <p className="font-semibold">{t('⚠️ Estos atajos son peligrosos')}</p>
           <p className="mt-1">
-            Al presionarlos se ejecutan en tu PC (por ejemplo, Win+L bloquea
-            la computadora). Usá los botones para navegar y aprender las
-            combinaciones visualmente.
+            {t(
+              'Al presionarlos se ejecutan en tu PC (por ejemplo, Win+L bloquea la computadora). Usá los botones para navegar y aprender las combinaciones visualmente.',
+            )}
           </p>
         </div>
       </div>
@@ -80,7 +82,7 @@ export function ShortcutPracticeVisual({
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-800 light:bg-white border border-slate-700 light:border-slate-300 text-slate-200 light:text-slate-700 text-sm font-medium hover:bg-slate-700 light:hover:bg-slate-100 hover:border-slate-600 light:hover:border-slate-400 transition-colors"
         >
           <ChevronLeft className="w-4 h-4" aria-hidden />
-          Anterior
+          {t('Anterior')}
         </button>
 
         <span className="text-slate-400 light:text-slate-600 text-sm tabular-nums">
@@ -92,14 +94,14 @@ export function ShortcutPracticeVisual({
           onClick={handleNext}
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-800 light:bg-white border border-slate-700 light:border-slate-300 text-slate-200 light:text-slate-700 text-sm font-medium hover:bg-slate-700 light:hover:bg-slate-100 hover:border-slate-600 light:hover:border-slate-400 transition-colors"
         >
-          Siguiente
+          {t('Siguiente')}
           <ChevronRight className="w-4 h-4" aria-hidden />
         </button>
       </div>
 
       {/* Keyboard hint */}
       <p className="text-xs text-slate-600 light:text-slate-500">
-        Podés usar las teclas ← → para navegar
+        {t('Podés usar las teclas ← → para navegar')}
       </p>
     </main>
   );
