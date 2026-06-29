@@ -1,10 +1,11 @@
 import { Outlet, useLocation } from 'react-router';
 import { ThemeToggle } from '@/features/theme/ThemeToggle';
 import { LanguageToggle } from '@/features/translation/LanguageToggle';
+import { TOOL_PATHS } from '@/features/training/tools';
 
 // En las pantallas de training los toggles viven dentro del ToolHeader
 // (al lado de "Progreso"), así que ahí no mostramos el top bar.
-const TRAINING_PATHS = new Set(['/general', '/vscode', '/chrome', '/windows']);
+const TRAINING_PATHS = new Set(TOOL_PATHS);
 
 export function RootLayout() {
   const { pathname } = useLocation();

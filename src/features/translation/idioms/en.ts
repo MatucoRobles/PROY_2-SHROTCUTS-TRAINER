@@ -143,6 +143,155 @@ const en: Record<string, string> = {
   'Captura de pantalla': 'Screenshot',
   'Crear escritorio virtual': 'Create virtual desktop',
   'Cambiar al escritorio virtual anterior': 'Switch to previous virtual desktop',
+
+  // ── Tools nuevas (títulos / descripciones) ──
+  'Formato de texto, estilos y navegación del documento.':
+    'Text formatting, styles and document navigation.',
+  'Celdas, fórmulas, selección y navegación de hojas.':
+    'Cells, formulas, selection and sheet navigation.',
+  'Línea de comandos: cancelar, limpiar e historial.':
+    'Command line: cancel, clear and history.',
+  'Reproducción, volumen y navegación del video.':
+    'Playback, volume and video navigation.',
+  'Canales, micrófono, búsqueda y marcar como leído.':
+    'Channels, microphone, search and mark as read.',
+  'Crear, navegar y organizar tus archivos.':
+    'Create, browse and organize your files.',
+
+  // ── Atajos · comunes ──
+  'Cortar selección': 'Cut selection',
+  'Guardar': 'Save',
+  'Rehacer': 'Redo',
+  'Seleccionar todo': 'Select all',
+  'Poner en negrita': 'Bold',
+  'Imprimir': 'Print',
+  'Guardar como': 'Save as',
+  'Seleccionar desde el cursor hasta el inicio': 'Select from the cursor to the start',
+  'Seleccionar desde el cursor hasta el final': 'Select from the cursor to the end',
+  'Copiar': 'Copy',
+  'Pegar': 'Paste',
+  'Deshacer': 'Undo',
+  'Buscar': 'Find',
+
+  // ── Atajos · VS Code ──
+  'Cortar línea': 'Cut line',
+  'Buscar en el archivo': 'Find in file',
+  'Reemplazar en el archivo': 'Replace in file',
+  'Formatear documento': 'Format document',
+  'Renombrar símbolo': 'Rename symbol',
+  'Abrir la terminal integrada': 'Open the integrated terminal',
+  'Ir a una línea': 'Go to a line',
+  'Abrir la configuración': 'Open settings',
+  'Duplicar la línea hacia abajo': 'Duplicate the line below',
+  'Mover la línea hacia arriba': 'Move the line up',
+  'Mover la línea hacia abajo': 'Move the line down',
+  'Seleccionar la siguiente coincidencia': 'Select the next match',
+
+  // ── Atajos · Chrome ──
+  'Abrir nueva ventana': 'Open new window',
+  'Recargar la página': 'Reload the page',
+  'Buscar en la página': 'Find on the page',
+  'Marcar como favorito': 'Bookmark this page',
+  'Abrir el historial': 'Open history',
+  'Abrir las descargas': 'Open downloads',
+  'Ir a la pestaña siguiente': 'Go to the next tab',
+  'Mostrar u ocultar la barra de favoritos': 'Show or hide the bookmarks bar',
+  'Cerrar la ventana': 'Close the window',
+  'Abrir herramientas de desarrollo': 'Open developer tools',
+
+  // ── Atajos · Word ──
+  'Poner en cursiva': 'Italic',
+  'Subrayar': 'Underline',
+  'Centrar el párrafo': 'Center the paragraph',
+  'Alinear a la izquierda': 'Align left',
+  'Alinear a la derecha': 'Align right',
+  'Justificar el párrafo': 'Justify the paragraph',
+  'Copiar el formato': 'Copy formatting',
+  'Pegar el formato': 'Paste formatting',
+  'Aplicar Título 1': 'Apply Heading 1',
+  'Aplicar Título 2': 'Apply Heading 2',
+  'Insertar salto de página': 'Insert page break',
+  'Quitar el formato del texto': 'Clear text formatting',
+  'Aumentar el tamaño de fuente': 'Increase font size',
+  'Disminuir el tamaño de fuente': 'Decrease font size',
+
+  // ── Atajos · Excel ──
+  'Editar la celda activa': 'Edit the active cell',
+  'Insertar la fecha de hoy': "Insert today's date",
+  'Seleccionar la columna': 'Select the column',
+  'Seleccionar la fila': 'Select the row',
+  'Ir al borde de los datos (derecha)': 'Go to the edge of data (right)',
+  'Seleccionar hasta el borde de los datos': 'Select to the edge of data',
+  'Ir a la celda A1': 'Go to cell A1',
+  'Abrir formato de celdas': 'Open format cells',
+  'Autosuma': 'AutoSum',
+  'Referencia absoluta ($)': 'Absolute reference ($)',
+  'Insertar filas o columnas': 'Insert rows or columns',
+
+  // ── Atajos · Terminal ──
+  'Cancelar el comando actual': 'Cancel the current command',
+  'Limpiar la pantalla': 'Clear the screen',
+  'Buscar en el historial': 'Search the history',
+  'Ir al inicio de la línea': 'Go to the start of the line',
+  'Ir al final de la línea': 'Go to the end of the line',
+  'Borrar hasta el inicio de la línea': 'Delete to the start of the line',
+  'Borrar hasta el final de la línea': 'Delete to the end of the line',
+  'Borrar la palabra anterior': 'Delete the previous word',
+  'Cerrar la sesión (EOF)': 'Close the session (EOF)',
+  'Suspender el proceso': 'Suspend the process',
+  'Pegar en la terminal': 'Paste in the terminal',
+
+  // ── Atajos · YouTube ──
+  'Reproducir o pausar': 'Play or pause',
+  'Silenciar': 'Mute',
+  'Pantalla completa': 'Fullscreen',
+  'Retroceder 10 segundos': 'Rewind 10 seconds',
+  'Adelantar 10 segundos': 'Forward 10 seconds',
+  'Activar el modo cine': 'Toggle theater mode',
+  'Activar los subtítulos': 'Toggle captions',
+  'Subir el volumen': 'Volume up',
+  'Bajar el volumen': 'Volume down',
+  'Retroceder 5 segundos': 'Rewind 5 seconds',
+  'Adelantar 5 segundos': 'Forward 5 seconds',
+  'Abrir el mini reproductor': 'Open the miniplayer',
+  'Ir al video siguiente': 'Go to the next video',
+  'Ir al inicio del video': 'Go to the start of the video',
+
+  // ── Atajos · Discord ──
+  'Búsqueda rápida (saltar a)': 'Quick switcher (jump to)',
+  'Silenciar el micrófono': 'Toggle mute (microphone)',
+  'Silenciar el sonido': 'Toggle deafen (sound)',
+  'Abrir la lista de atajos': 'Open the shortcuts list',
+  'Marcar el canal como leído': 'Mark channel as read',
+  'Ir al canal anterior': 'Go to the previous channel',
+  'Ir al canal siguiente': 'Go to the next channel',
+  'Ir al servidor anterior': 'Go to the previous server',
+  'Ir al servidor siguiente': 'Go to the next server',
+  'Abrir el selector de emojis': 'Open the emoji picker',
+  'Marcar el servidor como leído': 'Mark server as read',
+
+  // ── Atajos · Drive ──
+  'Buscar en Drive': 'Search in Drive',
+  'Seleccionar todos los elementos': 'Select all items',
+  'Renombrar el elemento': 'Rename the item',
+  'Ver u ocultar el panel de detalles': 'Show or hide the details panel',
+  'Abrir el menú "Nuevo"': 'Open the "New" menu',
+  'Mover a la papelera': 'Move to trash',
+
+  // ── Atajos · Windows (nuevos) ──
+  'Mostrar el escritorio': 'Show the desktop',
+  'Abrir el explorador de archivos': 'Open file explorer',
+  'Abrir la búsqueda': 'Open search',
+  'Minimizar todas las ventanas': 'Minimize all windows',
+  'Abrir el menú de enlaces rápidos': 'Open the quick link menu',
+  'Abrir el administrador de tareas': 'Open task manager',
+  'Captura de pantalla (recorte)': 'Screenshot (snip)',
+  'Anclar la ventana a la izquierda': 'Snap the window left',
+  'Abrir el portapapeles': 'Open the clipboard',
+  'Crear un escritorio virtual': 'Create a virtual desktop',
+  'Cerrar el escritorio virtual': 'Close the virtual desktop',
+  'Ir al escritorio virtual anterior': 'Go to the previous virtual desktop',
+  'Ir al escritorio virtual siguiente': 'Go to the next virtual desktop',
 };
 
 export default en;

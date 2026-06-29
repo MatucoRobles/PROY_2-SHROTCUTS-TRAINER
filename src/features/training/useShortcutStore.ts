@@ -90,7 +90,11 @@ export const useShortcutStore = create<ShortcutState>()(
     }),
     {
       name: 'shortcuts-trainer-storage',
-      version: 2,
+      version: 3,
+      // El catálogo de atajos es data de la app (viene del código), no del
+      // usuario: no se persiste para que no quede desactualizado al sumar
+      // tools/atajos. Solo recordamos el filtro de nivel elegido.
+      partialize: (state) => ({ selectedLevel: state.selectedLevel }),
     },
   ),
 );

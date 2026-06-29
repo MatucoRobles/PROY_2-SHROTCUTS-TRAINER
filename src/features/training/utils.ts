@@ -116,13 +116,33 @@ export function canonicalKey(rawKey: string): string {
   return resolved.length === 1 ? resolved.toLowerCase() : resolved;
 }
 
+// Teclas que, incluso solas, hacen algo en el navegador (scroll, foco,
+// navegación) y conviene frenar mientras se practica el atajo.
+const PREVENT_KEYS: ReadonlySet<string> = new Set([
+  'Tab',
+  'Enter',
+  'Escape',
+  'Backspace',
+  'Delete',
+  'ArrowUp',
+  'ArrowDown',
+  'ArrowLeft',
+  'ArrowRight',
+  'Home',
+  'End',
+  'PageUp',
+  'PageDown',
+  'Space',
+  ' ',
+]);
+
 /**
  * Decide si el atajo debe prevenir el comportamiento nativo del navegador
- * (guardar, abrir diálogo, etc). Útil para evitar que `Ctrl+S` abra el
- * diálogo de "Guardar como" mientras se entrena.
+ * (guardar, scrollear, mover el foco, etc). Aplica cuando hay un
+ * modificador o una tecla de navegación especial en la combinación.
  */
 export function shouldPreventDefault(combo: ReadonlyArray<string>): boolean {
-  return combo.some((key) => MODIFIER_KEYS.has(key));
+  return combo.some((key) => MODIFIER_KEYS.has(key) || PREVENT_KEYS.has(key));
 }
 
 /**

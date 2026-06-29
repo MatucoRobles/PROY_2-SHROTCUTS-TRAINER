@@ -1,62 +1,12 @@
 import { Link } from 'react-router';
-import { Code, Globe, Keyboard, MonitorSmartphone, Layers, ArrowRight, BarChart2, Eye } from 'lucide-react';
+import { Layers, ArrowRight, BarChart2, Eye } from 'lucide-react';
 import { useShortcutStore } from '../useShortcutStore';
 import { useTranslation } from '@/features/translation/useTranslation';
 import { cn } from '@/shared/utils/cn';
-
-interface ToolCard {
-  tool: string;
-  title: string;
-  description: string;
-  icon: React.ComponentType<{ className?: string }>;
-  path: string;
-  accent: string;
-  /**
-   * Indica que esta tool se entrena en modo visual (sin captura de
-   * teclas) porque el SO o el navegador interceptan sus combinaciones
-   * antes de que el evento llegue a la app.
-   */
-  visual?: boolean;
-}
-
-const TOOLS: ReadonlyArray<ToolCard> = [
-  {
-    tool: 'General',
-    title: 'Atajos generales',
-    description: 'Copia, pega, deshacer y guardar. La base de cualquier editor.',
-    icon: Keyboard,
-    path: '/general',
-    accent: 'text-sky-400',
-  },
-  {
-    tool: 'VS Code',
-    title: 'Visual Studio Code',
-    description: 'Paleta de comandos, formateo, multi-cursor y navegación.',
-    icon: Code,
-    path: '/vscode',
-    accent: 'text-indigo-400',
-  },
-  {
-    tool: 'Chrome',
-    title: 'Google Chrome',
-    description: 'Pestañas, historial, descargas y modo incógnito.',
-    icon: Globe,
-    path: '/chrome',
-    accent: 'text-emerald-400',
-  },
-  {
-    tool: 'Windows',
-    title: 'Windows',
-    description: 'Escritorio virtual, bloqueo, captura y administrador de tareas.',
-    icon: MonitorSmartphone,
-    path: '/windows',
-    accent: 'text-amber-400',
-    visual: true,
-  },
-];
+import { TOOLS, type ToolDef } from '../tools';
 
 interface ToolTileProps {
-  card: ToolCard;
+  card: ToolDef;
   count: number;
 }
 
@@ -146,9 +96,9 @@ export function TrainerHome() {
         >
           {TOOLS.map((card) => (
             <ToolTile
-              key={card.tool}
+              key={card.key}
               card={card}
-              count={counts[card.tool] ?? 0}
+              count={counts[card.key] ?? 0}
             />
           ))}
         </section>

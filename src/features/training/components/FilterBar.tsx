@@ -2,6 +2,7 @@ import { Link } from 'react-router';
 import { cn } from '@/shared/utils/cn';
 import { useShortcutStore } from '../useShortcutStore';
 import { useTranslation } from '@/features/translation/useTranslation';
+import { TOOLS } from '../tools';
 
 /**
  * Barra de filtros unificada para categorías y niveles.
@@ -13,12 +14,7 @@ import { useTranslation } from '@/features/translation/useTranslation';
  * - Todo en una sola fila horizontal hacia la izquierda
  */
 
-const CATEGORIES = [
-  { value: 'General', label: 'General' },
-  { value: 'VS Code', label: 'VS Code' },
-  { value: 'Chrome', label: 'Chrome' },
-  { value: 'Windows', label: 'Windows' },
-];
+const CATEGORIES = TOOLS.map((t) => ({ value: t.key, label: t.key }));
 
 const LEVELS = [
   { value: null, label: 'Todos' },
@@ -28,13 +24,10 @@ const LEVELS = [
   { value: 4, label: 'Nivel 4' },
 ];
 
-// Mapeo de categorías a rutas
-const CATEGORY_ROUTES: Record<string, string> = {
-  'General': '/general',
-  'VS Code': '/vscode',
-  'Chrome': '/chrome',
-  'Windows': '/windows',
-};
+// Mapeo de categorías a rutas, derivado del registro de tools.
+const CATEGORY_ROUTES: Record<string, string> = Object.fromEntries(
+  TOOLS.map((t) => [t.key, t.path]),
+);
 
 interface FilterBarProps {
   activeCategory: string;

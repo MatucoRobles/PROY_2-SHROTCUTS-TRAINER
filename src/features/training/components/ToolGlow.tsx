@@ -1,5 +1,5 @@
 import { cn } from '@/shared/utils/cn';
-import { TOOL_GLOW } from '../constants';
+import { getTool } from '../tools';
 
 /**
  * Resplandor de acento por herramienta: un blob difuminado grande, fijo
@@ -7,7 +7,7 @@ import { TOOL_GLOW } from '../constants';
  * de los `<main>` transparentes sobre el fondo base del `<html>`.
  */
 export function ToolGlow({ tool }: { tool: string }) {
-  const color = TOOL_GLOW[tool];
+  const color = getTool(tool)?.glow;
   if (!color) return null;
   return (
     <div

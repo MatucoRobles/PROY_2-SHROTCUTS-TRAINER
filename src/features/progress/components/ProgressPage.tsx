@@ -7,20 +7,7 @@ import { getAccuracy } from "../../training/utils";
 import { cn } from "@/shared/utils/cn";
 import { GlobalAccuracyRing } from "./GlobalAccuracyRing";
 import { useTranslation } from "@/features/translation/useTranslation";
-
-const TOOL_COLORS: Record<string, string> = {
-  General: "text-sky-400 light:text-sky-600",
-  "VS Code": "text-violet-400 light:text-violet-600",
-  Chrome: "text-emerald-400 light:text-emerald-600",
-  Windows: "text-yellow-400 light:text-yellow-600",
-};
-
-const TOOL_ACCENT: Record<string, string> = {
-  General: "bg-sky-400",
-  "VS Code": "bg-violet-400",
-  Chrome: "bg-emerald-400",
-  Windows: "bg-yellow-400",
-};
+import { getTool } from "../../training/tools";
 
 // Herramientas visuales (no se practican con teclado) → fuera del progreso.
 const VISUAL_ONLY_TOOLS = new Set(["Windows"]);
@@ -102,7 +89,7 @@ export function ProgressPage() {
                       <td
                         className={cn(
                           "px-4 py-4 font-medium",
-                          TOOL_COLORS[record.tool] ?? "text-slate-300 light:text-slate-700",
+                          getTool(record.tool)?.accent ?? "text-slate-300 light:text-slate-700",
                         )}
                       >
                         {record.tool}
@@ -133,7 +120,7 @@ export function ProgressPage() {
                               aria-valuemax={100}
                               className={cn(
                                 "h-full rounded-full transition-all duration-500",
-                                TOOL_ACCENT[record.tool] ?? "bg-slate-400",
+                                getTool(record.tool)?.bar ?? "bg-slate-400",
                               )}
                               style={{ width: `${accuracy}%` }}
                             />
