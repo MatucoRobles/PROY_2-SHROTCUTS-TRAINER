@@ -1,7 +1,10 @@
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { KeyCap } from '@/shared/components/KeyCap';
 import type { Shortcut } from '../types';
 import { useThemeStore } from '@/features/theme/useThemeStore';
 import { useTranslation } from '@/features/translation/useTranslation';
+import { canonicalKey } from '../utils';
+import { playKeycapSound } from '@/shared/utils/sound';
 
 interface ShortcutCardProps {
   shortcut: Shortcut;
@@ -26,15 +29,77 @@ function formatKey(key: string): string {
 }
 
 /**
- * Tarjeta central que muestra la descripción del atajo a ejecutar
- * y la combinación esperada, renderizada con `KeyCap` por cada tecla.
+ * Tarjeta central que muestra la descripción del atajo y su combinación.
  *
- * Sin estado propio: deriva 100% de la prop `shortcut`. Esto facilita
- * reusarlo en modo "preview" (atajo siguiente) o "resultado".
+ * Escucha `keydown`/`keyup` para iluminar en vivo los keycaps mientras
+ * la tecla siga presionada (efecto "teclado vivo") y reproduce el sonido
+ * de chispa elegido en cada pulsación nueva.
  */
 export function ShortcutCard({ shortcut }: ShortcutCardProps) {
   const { t } = useTranslation();
   const isDark = useThemeStore((s) => s.mode === 'dark');
+
+  const expectedNorm = useMemo(
+    () => shortcut.expectedCombo.map(canonicalKey),
+    [shortcut],
+  );
+
+  const [activeIdx, setActiveIdx] = useState<ReadonlySet<number>>(new Set());
+  const downKeys = useRef<Set<string>>(new Set());
+
+  useEffect(() => {
+    downKeys.current.clear();
+    setActiveIdx(new Set());
+
+    const recompute = () => {
+      const next = new Set<number>();
+      expectedNorm.forEach((k, i) => {
+        if (downKeys.current.has(k)) next.add(i);
+      });
+      setActiveIdx(next);
+    };
+
+    const syncMods = (event: KeyboardEvent) => {
+      const flags: Array<[string, boolean]> = [
+        ['Control', event.ctrlKey],
+        ['Shift', event.shiftKey],
+        ['Alt', event.altKey],
+        ['Meta', event.metaKey],
+      ];
+      flags.forEach(([name, on]) => {
+        if (on) downKeys.current.add(name);
+        else downKeys.current.delete(name);
+      });
+    };
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      syncMods(event);
+      const k = canonicalKey(event.key);
+      downKeys.current.add(k);
+      recompute();
+      if (!event.repeat && expectedNorm.includes(k)) playKeycapSound();
+    };
+
+    const onKeyUp = (event: KeyboardEvent) => {
+      syncMods(event);
+      downKeys.current.delete(canonicalKey(event.key));
+      recompute();
+    };
+
+    const reset = () => {
+      downKeys.current.clear();
+      setActiveIdx(new Set());
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener('keyup', onKeyUp);
+    window.addEventListener('blur', reset);
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('keyup', onKeyUp);
+      window.removeEventListener('blur', reset);
+    };
+  }, [expectedNorm]);
 
   return (
     <section
@@ -55,6 +120,7 @@ export function ShortcutCard({ shortcut }: ShortcutCardProps) {
             key={`${key}-${index}`}
             char={formatKey(key)}
             variant={isDark ? 'dark' : 'light'}
+            active={activeIdx.has(index)}
           />
         ))}
       </div>
