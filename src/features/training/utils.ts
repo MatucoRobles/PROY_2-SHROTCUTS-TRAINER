@@ -91,6 +91,21 @@ export function isMatchingCombo(
   return true;
 }
 
+const KEY_LABELS: Readonly<Record<string, string>> = {
+  Control: 'Ctrl',
+  Meta: 'Win',
+  ArrowUp: '↑',
+  ArrowDown: '↓',
+  ArrowLeft: '←',
+  ArrowRight: '→',
+  ' ': 'Space',
+};
+
+/** Tecla técnica → etiqueta humana (`Control` → `Ctrl`, `ArrowUp` → `↑`). */
+export function formatKeyLabel(key: string): string {
+  return KEY_LABELS[key] ?? key;
+}
+
 /**
  * Forma canónica de una tecla (alias resueltos + minúscula si es de un
  * solo carácter). Sirve tanto para `event.key` como para las teclas del

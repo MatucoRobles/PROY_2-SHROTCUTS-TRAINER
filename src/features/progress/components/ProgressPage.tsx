@@ -22,18 +22,29 @@ const TOOL_ACCENT: Record<string, string> = {
   Windows: "bg-yellow-400",
 };
 
+// Herramientas visuales (no se practican con teclado) → fuera del progreso.
+const VISUAL_ONLY_TOOLS = new Set(["Windows"]);
+
 export function ProgressPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const records = useProgressStore((s) => s.records);
   const shortcuts = useShortcutStore((s) => s.shortcuts);
 
-  const { globalAccuracy, totalMastered, totalShortcuts } = getGlobalStats(
-    records,
-    shortcuts.length,
+  // Solo atajos practicables (excluye los visuales como Windows).
+  const practicable = shortcuts.filter((s) => !VISUAL_ONLY_TOOLS.has(s.tool));
+
+  // Récords sin las herramientas visuales: no inflan la precisión global.
+  const practicedRecords = Object.fromEntries(
+    Object.entries(records).filter(([tool]) => !VISUAL_ONLY_TOOLS.has(tool)),
   );
 
-  const toolRows = Object.values(records);
+  const { globalAccuracy, totalMastered, totalShortcuts } = getGlobalStats(
+    practicedRecords,
+    practicable.length,
+  );
+
+  const toolRows = Object.values(practicedRecords);
 
   return (
     <main className="min-h-screen bg-slate-950 light:bg-slate-50 text-slate-100 light:text-slate-900 p-6 flex flex-col gap-8">
@@ -161,7 +172,7 @@ export function ProgressPage() {
         </div>
 
         <div className="flex flex-wrap gap-2">
-          {shortcuts.map((shortcut) => {
+          {practicable.map((shortcut) => {
             const mastered = isMastered(shortcut.id, records);
             return (
               <span

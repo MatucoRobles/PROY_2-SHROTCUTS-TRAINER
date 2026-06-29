@@ -18,7 +18,7 @@ interface SessionStatsProps {
  *
  * D5: este componente es responsabilidad del Integrante 5.
  */
-export function SessionStats({ totalShortcuts }: SessionStatsProps) {
+export function SessionStats(_props: SessionStatsProps) {
   const { t } = useTranslation();
   const correctAttempts = useShortcutStore((s) => s.correctAttempts);
   const wrongAttempts = useShortcutStore((s) => s.wrongAttempts);
@@ -31,11 +31,6 @@ export function SessionStats({ totalShortcuts }: SessionStatsProps) {
 
   return (
     <div className="w-full max-w-4xl mx-auto flex flex-col gap-3">
-      {/* Contador de progreso */}
-      <p className="text-center text-xs text-slate-500 tabular-nums">
-        {correctAttempts} / {totalShortcuts}
-      </p>
-
       {/* Cards: Aciertos / Errores / Tiempo */}
       <div className="grid grid-cols-3 gap-3">
         <StatCard

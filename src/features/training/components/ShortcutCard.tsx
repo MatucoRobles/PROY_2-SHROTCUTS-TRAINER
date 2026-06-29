@@ -3,29 +3,13 @@ import { KeyCap } from '@/shared/components/KeyCap';
 import type { Shortcut } from '../types';
 import { useThemeStore } from '@/features/theme/useThemeStore';
 import { useTranslation } from '@/features/translation/useTranslation';
-import { canonicalKey } from '../utils';
+import { canonicalKey, formatKeyLabel } from '../utils';
 import { playKeycapSound } from '@/shared/utils/sound';
 
 interface ShortcutCardProps {
   shortcut: Shortcut;
-}
-
-const KEY_LABELS: Readonly<Record<string, string>> = {
-  Control: 'Ctrl',
-  Meta: 'Win',
-  ArrowUp: '↑',
-  ArrowDown: '↓',
-  ArrowLeft: '←',
-  ArrowRight: '→',
-  ' ': 'Space',
-};
-
-/**
- * Formatea una tecla técnica (`Control`, `ArrowUp`, ` `) a la
- * convención humana que el usuario espera ver: `Ctrl`, `↑`, `Space`.
- */
-function formatKey(key: string): string {
-  return KEY_LABELS[key] ?? key;
+  /** Si es false, oculta las teclas (modo Adivinar). */
+  reveal?: boolean;
 }
 
 /**
@@ -35,7 +19,7 @@ function formatKey(key: string): string {
  * la tecla siga presionada (efecto "teclado vivo") y reproduce el sonido
  * de chispa elegido en cada pulsación nueva.
  */
-export function ShortcutCard({ shortcut }: ShortcutCardProps) {
+export function ShortcutCard({ shortcut, reveal = true }: ShortcutCardProps) {
   const { t } = useTranslation();
   const isDark = useThemeStore((s) => s.mode === 'dark');
 
@@ -104,7 +88,7 @@ export function ShortcutCard({ shortcut }: ShortcutCardProps) {
   return (
     <section
       aria-live="polite"
-      className="w-full max-w-4xl mx-auto flex flex-col items-center gap-8 bg-slate-900/70 light:bg-white/80 p-10 rounded-2xl border border-slate-800 light:border-slate-200 shadow-2xl backdrop-blur-sm"
+      className="w-full max-w-4xl mx-auto flex flex-col items-center gap-8 bg-slate-900/70 light:bg-white/80 p-6 sm:p-10 rounded-2xl border border-slate-800 light:border-slate-200 shadow-2xl backdrop-blur-sm"
     >
       <p className="text-xs uppercase tracking-[0.3em] text-slate-500">
         {t('Atajo a ejecutar')}
@@ -118,9 +102,9 @@ export function ShortcutCard({ shortcut }: ShortcutCardProps) {
         {shortcut.expectedCombo.map((key, index) => (
           <KeyCap
             key={`${key}-${index}`}
-            char={formatKey(key)}
+            char={reveal ? formatKeyLabel(key) : '?'}
             variant={isDark ? 'dark' : 'light'}
-            active={activeIdx.has(index)}
+            active={reveal && activeIdx.has(index)}
           />
         ))}
       </div>

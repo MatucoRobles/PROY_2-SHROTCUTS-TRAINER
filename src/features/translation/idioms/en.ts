@@ -85,6 +85,17 @@ const en: Record<string, string> = {
   // ── Celebración de racha ──
   '¡Estás imparable!': "You're unstoppable!",
 
+  // ── Modos de juego ──
+  'Aprender': 'Learn',
+  'Adivinar': 'Guess',
+  'Opción múltiple': 'Multiple choice',
+  'Contrarreloj': 'Time attack',
+  '¿Qué hace este atajo?': 'What does this shortcut do?',
+  'Tocá el atajo lo más rápido que puedas': 'Press the shortcut as fast as you can',
+  '¡Tiempo!': "Time's up!",
+  'aciertos': 'correct',
+  'Jugar de nuevo': 'Play again',
+
   // ── Toggle de tema ──
   'Tema actual: oscuro. Click para cambiar.':
     'Current theme: dark. Click to switch.',
