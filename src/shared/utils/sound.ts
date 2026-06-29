@@ -14,9 +14,19 @@ function getCtx(): AudioContext | null {
   return audioCtx;
 }
 
-function note(ctx: AudioContext, freq: number, start: number, dur: number, gain: number, lp: number) {
+type Wave = 'sine' | 'triangle' | 'square' | 'sawtooth';
+
+function note(
+  ctx: AudioContext,
+  freq: number,
+  start: number,
+  dur: number,
+  gain: number,
+  lp: number,
+  type: Wave = 'triangle',
+) {
   const osc = ctx.createOscillator();
-  osc.type = 'triangle';
+  osc.type = type;
   osc.frequency.value = freq;
 
   const env = ctx.createGain();
@@ -40,4 +50,23 @@ export function playKeycapSound() {
   const t = ctx.currentTime;
   note(ctx, 659.25, t, 0.14, 0.055, 3200);
   note(ctx, 987.77, t + 0.1, 0.28, 0.05, 3400);
+}
+
+/** Acierto: arpegio mayor ascendente, alegre. */
+export function playCorrectSound() {
+  const ctx = getCtx();
+  if (!ctx) return;
+  const t = ctx.currentTime;
+  note(ctx, 659.25, t, 0.1, 0.05, 3400);
+  note(ctx, 830.61, t + 0.07, 0.12, 0.05, 3600);
+  note(ctx, 1108.73, t + 0.14, 0.26, 0.045, 3800);
+}
+
+/** Error: dos notas graves descendentes con grit. */
+export function playWrongSound() {
+  const ctx = getCtx();
+  if (!ctx) return;
+  const t = ctx.currentTime;
+  note(ctx, 196, t, 0.16, 0.05, 1100, 'sawtooth');
+  note(ctx, 146.83, t + 0.1, 0.3, 0.05, 900, 'sawtooth');
 }
