@@ -1,48 +1,36 @@
-import { Link } from 'react-router';
-import { ArrowLeft } from 'lucide-react';
 import { useShortcutStore } from '@/features/training/useShortcutStore';
 import { ShortcutPracticeVisual } from '@/features/training/components/ShortcutPracticeVisual';
+import { ToolHeader } from '@/features/training/components/ToolHeader';
+import { FilterBar } from '@/features/training/components/FilterBar';
+import { ToolGlow } from '@/features/training/components/ToolGlow';
 import { filterByTool } from '@/features/training/utils';
-import { useTranslation } from '@/features/translation/useTranslation';
 
 /**
  * Training de Windows en modo visual.
  *
- * El sistema operativo intercepta a nivel kernel las combinaciones
- * que incluyen la tecla `Win` (Win+L bloquea la PC, Win+Shift+S abre
- * la herramienta de captura, etc.). `event.preventDefault()` no puede
- * frenar esa acción porque ocurre por debajo del navegador.
+ * El sistema operativo intercepta a nivel kernel las combinaciones con la
+ * tecla `Win` (Win+L bloquea la PC, etc.); `event.preventDefault()` no las
+ * frena. Por eso no usa captura de teclas: navega con botones/flechas.
  *
- * Por eso esta tool no usa `TrainingSession` (modo activo): en su
- * lugar renderiza `ShortcutPracticeVisual`, que permite navegar
- * atajo por atajo con botones, sin riesgo de ejecutarlos.
+ * Comparte el mismo shell que el resto (ToolHeader + FilterBar + glow de
+ * acento) para que se pueda volver, cambiar de herramienta y de nivel.
  */
 export default function WindowsTraining() {
-  const { t } = useTranslation();
   const shortcuts = useShortcutStore((s) => s.shortcuts);
-  const windowsShortcuts = filterByTool(shortcuts, 'Windows');
+  const selectedLevel = useShortcutStore((s) => s.selectedLevel);
+
+  let pool = filterByTool(shortcuts, 'Windows');
+  if (selectedLevel !== null) pool = pool.filter((s) => s.level === selectedLevel);
 
   return (
-    <div className="min-h-screen bg-slate-950 light:bg-slate-50 text-slate-100 light:text-slate-900 flex flex-col">
-      <header className="w-full px-6 py-3 flex items-center gap-2">
-        <Link
-          to="/"
-          className="inline-flex items-center gap-1.5 text-sm text-slate-400 light:text-slate-600 hover:text-sky-400 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" aria-hidden />
-          {t('Inicio')}
-        </Link>
-        <span className="text-slate-600 light:text-slate-500 text-xs ml-2">
-          {t('Modo visual — el SO intercepta las combinaciones con la tecla Windows')}
-        </span>
-      </header>
-      <main className="flex-1 flex flex-col items-center justify-center p-6 gap-8">
-        <ShortcutPracticeVisual
-          shortcuts={windowsShortcuts}
-          title="Atajos de Windows"
-          description="Practicá las combinaciones visualmente. En modo activo no es posible: el sistema operativo las ejecuta antes de que el navegador pueda registrarlas."
-        />
-      </main>
-    </div>
+    <main className="min-h-screen w-full bg-transparent text-slate-100 light:text-slate-900 flex flex-col items-center p-6 gap-8">
+      <ToolGlow tool="Windows" />
+      <ToolHeader tool="Windows" />
+      <FilterBar activeCategory="Windows" />
+      <ShortcutPracticeVisual
+        shortcuts={pool}
+        description="Practicá las combinaciones visualmente. En modo activo no es posible: el sistema operativo las ejecuta antes de que el navegador pueda registrarlas."
+      />
+    </main>
   );
 }
