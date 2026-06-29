@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router';
+import { createHashRouter } from 'react-router';
 import HomePage from '@/pages/HomePage';
 import WindowsTraining from '@/pages/WindowsTraining';
 import ChromeTraining from '@/pages/ChromeTraining';
@@ -7,7 +7,7 @@ import VsCodeTraining from '@/pages/VsCodeTraining';
 import NotFoundPage from '@/pages/NotFoundPage';
 import ProgressPageRoute from "@/pages/ProgressPage";
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   {
     path: "/",
     children: [

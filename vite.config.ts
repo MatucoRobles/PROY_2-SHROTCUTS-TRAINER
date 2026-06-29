@@ -5,6 +5,8 @@ import path from 'node:path'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/PROY_2-SHROTCUTS-TRAINER/',
+  preview: { allowedHosts: ['.trycloudflare.com'] },
   plugins: [react(),tailwindcss()],
   resolve: { alias: { "@" : path.resolve (__dirname, "./src") } }
 })
