@@ -14,7 +14,7 @@ const STORAGE_KEY = 'shortcuts-trainer-language-storage';
 export const useLanguageStore = create<LanguageState>()(
   persist(
     (set, get) => ({
-      language: 'es',
+      language: 'en',
       setLanguage: (lang) => {
         document.documentElement.lang = lang;
         set({ language: lang });
