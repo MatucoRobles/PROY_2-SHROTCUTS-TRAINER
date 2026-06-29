@@ -46,14 +46,14 @@ export function FilterBar({ activeCategory }: FilterBarProps) {
   const setSelectedLevel = useShortcutStore((s) => s.setSelectedLevel);
 
   return (
-    <div className="w-full px-6">
+    <div className="w-full px-4 sm:px-6">
       {/* Contenedor con bordes superior e inferior */}
-      <div className="flex items-center gap-4 py-2.5
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 py-2.5
                       border-y border-slate-800/80 light:border-slate-200
                       bg-slate-900/30 light:bg-white/40 backdrop-blur-sm">
 
         {/* Bloque de Categorías */}
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
           {CATEGORIES.map((cat) => (
             <Link
               key={cat.value}
@@ -70,11 +70,11 @@ export function FilterBar({ activeCategory }: FilterBarProps) {
           ))}
         </div>
 
-        {/* Separador vertical */}
-        <span className="w-px h-6 bg-slate-700/60 light:bg-slate-300 flex-shrink-0" aria-hidden />
+        {/* Separador vertical (solo desktop) */}
+        <span className="hidden sm:block w-px h-6 bg-slate-700/60 light:bg-slate-300 flex-shrink-0" aria-hidden />
 
         {/* Bloque de Niveles */}
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
           {LEVELS.map((level) => (
             <button
               key={level.label}

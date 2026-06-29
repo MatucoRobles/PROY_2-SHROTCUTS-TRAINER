@@ -1,4 +1,5 @@
 import { createHashRouter } from 'react-router';
+import { RootLayout } from '@/app/RootLayout';
 import HomePage from '@/pages/HomePage';
 import WindowsTraining from '@/pages/WindowsTraining';
 import ChromeTraining from '@/pages/ChromeTraining';
@@ -10,6 +11,7 @@ import ProgressPageRoute from "@/pages/ProgressPage";
 export const router = createHashRouter([
   {
     path: "/",
+    Component: RootLayout,
     children: [
       { index: true, Component: HomePage },
       { path: "general", Component: GeneralTraining },
