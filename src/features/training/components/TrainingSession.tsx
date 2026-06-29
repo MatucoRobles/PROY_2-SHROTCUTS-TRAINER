@@ -11,6 +11,9 @@ import { useProgressStore } from "../../progress/progressStore"; // ← nuevo pa
 import { getAverageResponseTime, filterByTool } from "../utils"; // ← nuevo para d5
 import { FilterBar } from './FilterBar';  // ← para D4
 import { useTranslation } from '@/features/translation/useTranslation';
+import { toast } from 'sonner';
+import { fireStreakConfetti } from '@/shared/utils/confetti';
+import { ToolGlow } from './ToolGlow';
 
 interface TrainingSessionProps {
   tool: string;
@@ -41,6 +44,7 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
   const nextShortcut = useShortcutStore((s) => s.nextShortcut);
   const recordAttempt = useShortcutStore((s) => s.recordAttempt);
   const resetStats = useShortcutStore((s) => s.resetStats);
+  const currentStreak = useShortcutStore((s) => s.currentStreak);
   const { status, triggerCorrect, triggerWrong } = useFeedback(); // ← nuevo
   const updateRecord = useProgressStore((s) => s.updateRecord); // ← nuevo para D5
 
@@ -74,6 +78,17 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
     shownAtRef.current = performance.now();
   }, [currentShortcut]);
 
+  // Celebración cada vez que la racha cruza un múltiplo de 10.
+  const prevStreakRef = useRef(0);
+  useEffect(() => {
+    const prev = prevStreakRef.current;
+    if (currentStreak > prev && currentStreak > 0 && currentStreak % 10 === 0) {
+      fireStreakConfetti();
+      toast.success(`🔥 ${currentStreak}`, { description: t('¡Estás imparable!') });
+    }
+    prevStreakRef.current = currentStreak;
+  }, [currentStreak, t]);
+
   // D3 — registra el resultado que D2 detecta.
   useGlobalKeydown({
     shortcut: currentShortcut,
@@ -106,7 +121,8 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
 
   if (!currentShortcut) {
     return (
-      <main className="min-h-screen w-full bg-slate-950 light:bg-slate-50 text-slate-100 light:text-slate-900 flex flex-col items-center justify-center p-6 gap-6">
+      <main className="min-h-screen w-full bg-transparent text-slate-100 light:text-slate-900 flex flex-col items-center justify-center p-6 gap-6">
+        <ToolGlow tool={tool} />
         <ToolHeader tool={tool} description={description} />
         <p className="text-slate-400 light:text-slate-600">
           {t('No hay atajos registrados para esta herramienta todavía.')}
@@ -116,7 +132,8 @@ export function TrainingSession({ tool, description }: TrainingSessionProps) {
   }
 
   return (
-    <main className="min-h-screen w-full bg-slate-950 light:bg-slate-50 text-slate-100 light:text-slate-900 flex flex-col items-center p-6 gap-8">
+    <main className="min-h-screen w-full bg-transparent text-slate-100 light:text-slate-900 flex flex-col items-center p-6 gap-8">
+      <ToolGlow tool={tool} />
       <ToolHeader tool={tool} description={description} />
 
       <FilterBar activeCategory={tool} />

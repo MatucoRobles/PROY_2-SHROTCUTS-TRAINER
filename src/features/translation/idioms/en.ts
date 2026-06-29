@@ -82,6 +82,9 @@ const en: Record<string, string> = {
     'The page you are looking for does not exist. Go back home and pick a tool to keep training.',
   'Ir al inicio': 'Go home',
 
+  // ── Celebración de racha ──
+  '¡Estás imparable!': "You're unstoppable!",
+
   // ── Toggle de tema ──
   'Tema actual: oscuro. Click para cambiar.':
     'Current theme: dark. Click to switch.',
