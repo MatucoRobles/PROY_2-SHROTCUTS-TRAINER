@@ -123,7 +123,7 @@ export function TrainerHome() {
   const total = shortcuts.length;
 
   return (
-    <main className="min-h-screen bg-slate-950 light:bg-slate-50 text-slate-100 light:text-slate-900 flex flex-col items-center justify-center p-6">
+    <main className="min-h-screen bg-slate-950 light:bg-slate-50 text-slate-100 light:text-slate-900 flex flex-col items-center justify-start px-6 pb-6 pt-2">
       <div className="w-full max-w-4xl flex flex-col gap-10">
         <header className="text-center space-y-3">
           <span className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.4em] text-sky-400 light:text-sky-600">
