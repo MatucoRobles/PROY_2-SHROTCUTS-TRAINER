@@ -43,8 +43,17 @@ export function useGlobalKeydown({
         event.preventDefault();
       }
 
-      if (matches) onMatch();
-      else onMismatch?.();
+      if (matches) {
+        onMatch();
+        return;
+      }
+
+      // Una sola tecla no se considera un intento fallido: el usuario
+      // probablemente todavía está componiendo la combinación. Solo
+      // contamos error cuando hay 2+ teclas y aún así no coincide.
+      if (pressed.size < 2) return;
+
+      onMismatch?.();
     };
 
     window.addEventListener('keydown', handler);

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, AlertTriangle } from 'lucide-react';
 import { ShortcutCard } from './ShortcutCard';
 import type { Shortcut } from '../types';
@@ -6,59 +6,57 @@ import { useTranslation } from '@/features/translation/useTranslation';
 
 interface ShortcutPracticeVisualProps {
   shortcuts: Shortcut[];
-  title: string;
   description?: string;
 }
 
 /**
- * Vista de práctica visual para atajos peligrosos.
+ * Práctica visual para atajos que no se pueden capturar (los intercepta
+ * el SO, como los de la tecla `Win`). No escucha teclas reales: navega
+ * con botones o con las flechas ← →.
  *
- * No captura teclas reales — usa botones para navegar entre atajos.
- * Úselo para tools cuyos atajos son interceptados por el sistema
- * operativo (tecla `Win`, `Alt+Tab` en algunos entornos) o por el
- * navegador, donde `event.preventDefault()` no alcanza.
- *
- * Hoy se usa para la tool "Windows" (ver `pages/WindowsTraining.tsx`).
+ * Es solo contenido — el shell de la página (header, filtros, fondo) lo
+ * provee `WindowsTraining`, igual que el resto de las herramientas.
  */
 export function ShortcutPracticeVisual({
   shortcuts,
-  title,
   description,
 }: ShortcutPracticeVisualProps) {
   const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const total = shortcuts.length;
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % shortcuts.length);
-  };
+  useEffect(() => {
+    if (total === 0) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') setCurrentIndex((p) => (p + 1) % total);
+      else if (e.key === 'ArrowLeft') setCurrentIndex((p) => (p - 1 + total) % total);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [total]);
 
-  const handlePrev = () => {
-    setCurrentIndex((prev) =>
-      prev === 0 ? shortcuts.length - 1 : prev - 1,
-    );
-  };
-
-  if (shortcuts.length === 0) {
+  if (total === 0) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-slate-950 light:bg-slate-50 text-slate-400 light:text-slate-600 p-6">
-        <p>{t('No hay atajos para mostrar.')}</p>
-      </div>
+      <p className="text-slate-400 light:text-slate-600">
+        {t('No hay atajos para mostrar.')}
+      </p>
     );
   }
 
-  const shortcut = shortcuts[currentIndex];
+  const index = currentIndex % total;
+  const shortcut = shortcuts[index];
+
+  const handleNext = () => setCurrentIndex((p) => (p + 1) % total);
+  const handlePrev = () => setCurrentIndex((p) => (p - 1 + total) % total);
 
   return (
-    <main className="min-h-screen bg-slate-950 light:bg-slate-50 text-slate-100 light:text-slate-900 flex flex-col items-center justify-center p-6 gap-8">
-      {/* Header */}
-      <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold">{t(title)}</h1>
-        {description && (
-          <p className="text-slate-400 light:text-slate-600 text-base">{t(description)}</p>
-        )}
-      </div>
+    <section className="w-full flex flex-col items-center gap-8">
+      {description && (
+        <p className="text-slate-400 light:text-slate-600 text-base text-center max-w-xl">
+          {t(description)}
+        </p>
+      )}
 
-      {/* Warning */}
       <div className="flex items-start gap-3 bg-amber-900/20 light:bg-amber-50 border border-amber-600/40 light:border-amber-500/40 rounded-xl px-5 py-4 max-w-xl">
         <AlertTriangle className="w-5 h-5 text-amber-400 light:text-amber-600 shrink-0 mt-0.5" aria-hidden />
         <div className="text-sm text-amber-200 light:text-amber-900 leading-relaxed">
@@ -71,10 +69,8 @@ export function ShortcutPracticeVisual({
         </div>
       </div>
 
-      {/* Shortcut card */}
       <ShortcutCard shortcut={shortcut} />
 
-      {/* Navigation */}
       <div className="flex items-center gap-6">
         <button
           type="button"
@@ -86,7 +82,7 @@ export function ShortcutPracticeVisual({
         </button>
 
         <span className="text-slate-400 light:text-slate-600 text-sm tabular-nums">
-          {currentIndex + 1} / {shortcuts.length}
+          {index + 1} / {total}
         </span>
 
         <button
@@ -99,10 +95,9 @@ export function ShortcutPracticeVisual({
         </button>
       </div>
 
-      {/* Keyboard hint */}
       <p className="text-xs text-slate-600 light:text-slate-500">
         {t('Podés usar las teclas ← → para navegar')}
       </p>
-    </main>
+    </section>
   );
 }

@@ -92,6 +92,16 @@ export function isMatchingCombo(
 }
 
 /**
+ * Forma canónica de una tecla (alias resueltos + minúscula si es de un
+ * solo carácter). Sirve tanto para `event.key` como para las teclas del
+ * `expectedCombo`, de modo que comparar membresía sea trivial.
+ */
+export function canonicalKey(rawKey: string): string {
+  const resolved = KEY_ALIASES[rawKey] ?? rawKey;
+  return resolved.length === 1 ? resolved.toLowerCase() : resolved;
+}
+
+/**
  * Decide si el atajo debe prevenir el comportamiento nativo del navegador
  * (guardar, abrir diálogo, etc). Útil para evitar que `Ctrl+S` abra el
  * diálogo de "Guardar como" mientras se entrena.

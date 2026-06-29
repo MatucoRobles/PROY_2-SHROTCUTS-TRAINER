@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from 'motion/react';
 import { Moon, Sun } from 'lucide-react';
 import { useThemeStore } from './useThemeStore';
 import { useTranslation } from '@/features/translation/useTranslation';
@@ -29,7 +30,18 @@ export function ThemeToggle() {
       title={isDark ? t('Modo oscuro') : t('Modo claro')}
       className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-slate-800/80 light:bg-white/80 border border-slate-700 light:border-slate-300 text-slate-200 light:text-slate-700 hover:bg-slate-700 light:hover:bg-slate-100 transition-colors backdrop-blur-sm shadow-[0_2px_8px_rgba(0,0,0,0.3)] light:shadow-[0_2px_8px_rgba(0,0,0,0.08)]"
     >
-      {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.span
+          key={isDark ? 'sun' : 'moon'}
+          initial={{ rotate: -90, opacity: 0, scale: 0.4 }}
+          animate={{ rotate: 0, opacity: 1, scale: 1 }}
+          exit={{ rotate: 90, opacity: 0, scale: 0.4 }}
+          transition={{ duration: 0.2 }}
+          className="inline-flex"
+        >
+          {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+        </motion.span>
+      </AnimatePresence>
     </button>
   );
 }

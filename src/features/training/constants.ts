@@ -1,5 +1,12 @@
 import type { Shortcut } from './types';
 
+export const TOOL_GLOW: Readonly<Record<string, string>> = {
+  General: 'bg-sky-500',
+  'VS Code': 'bg-indigo-500',
+  Chrome: 'bg-emerald-500',
+  Windows: 'bg-amber-500',
+};
+
 export const INITIAL_SHORTCUTS: Shortcut[] = [
   {
     id: crypto.randomUUID(),

@@ -23,8 +23,18 @@ export const useThemeStore = create<ThemeState>()(
       mode: 'dark',
       toggle: () => {
         const next: ThemeMode = get().mode === 'dark' ? 'light' : 'dark';
-        document.documentElement.classList.toggle('light', next === 'light');
-        set({ mode: next });
+        const apply = () => {
+          document.documentElement.classList.toggle('light', next === 'light');
+          set({ mode: next });
+        };
+        const doc = document as Document & {
+          startViewTransition?: (cb: () => void) => unknown;
+        };
+        if (typeof doc.startViewTransition === 'function') {
+          doc.startViewTransition(apply);
+        } else {
+          apply();
+        }
       },
     }),
     {
