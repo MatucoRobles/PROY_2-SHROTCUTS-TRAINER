@@ -1,5 +1,0 @@
-@import "tailwindcss";
-
-@theme {
-  /* Aquí podremos definir nuestros tokens de diseño obligatorios sin usar tailwind.config.js */
-}

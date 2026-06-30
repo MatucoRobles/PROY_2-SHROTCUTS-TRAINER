@@ -1,28 +1,26 @@
-# 🧠 Memoria de Sesión - Proyecto 2: Entrenador de Atajos de Teclado
+# SESSION_NOTES - Shortcuts Trainer
 
-## 📌 Estado Actual (Desafío D1: La Base)
+## 📌 Contexto Actual
+* **Proyecto:** PROY_2 - Shortcuts Trainer.
+* **Stack Tecnológico:** React 19, Vite, Zustand v5 (con persistencia) y Tailwind CSS v4.
+* **Arquitectura:** Feature-First (Regla 1 de `AGENT.md`). Los archivos de dominio se agrupan por *feature* y no por tipo.
 
-Hemos inicializado la configuración base del repositorio preparando el terreno para un equipo de 6 personas bajo la arquitectura **Feature-First**.
+## 🚀 Progreso (Desafío D1 Completado)
+* **Capa de Datos:** Se definió el modelo estricto de `Shortcut` alineado con `PROY GUIDE.md` (`expectedCombo`, `tool`, `level`).
+* **Archivos Reubicados:** `types.ts` y `constants.ts` fueron movidos a la carpeta de la *feature* correspondiente (`src/features/...` o similar) para cumplir con la arquitectura.
+* **Estado Global (Zustand):** 
+  * Se creó `useShortcutStore.ts` con middleware `persist` (LocalStorage).
+  * Integración de `INITIAL_SHORTCUTS`.
+  * Manejo de estadísticas (`correctAttempts`, `wrongAttempts`, `streak`).
+  * Creación de la acción `nextShortcut` para rotación aleatoria de atajos sin repetir el anterior.
 
-### ✅ Lo que logramos hoy:
-1. **Estructura del Proyecto:** Definida la división de responsabilidades en `src/features/` y `src/shared/`.
-2. **Stack Configurado:** Vite, React 19, Tailwind CSS v4 (con directiva en `index.css`), utilidades de clases base (`cn.ts`).
-3. **Estado Global:** Creado el store de estadísticas (`useShortcutStore.ts`) con Zustand v5 + `persist`.
-4. **Contratos de Datos:** 
-   - `types.ts`: Definida la interfaz estricta `Shortcut`.
-   - `constants.ts`: Creada la lista `INITIAL_SHORTCUTS` usando `crypto.randomUUID()`.
+## 💬 Prompts Clave de esta Sesión
+1. *"Todo el Proyecto cumple las normas de arquitectura y orden que se especifican en el archivo AGENT.md?"* -> Ayudó a identificar y corregir violaciones en el modelo de datos y la ubicación de archivos.
 
-### 🚧 Pendientes para la próxima sesión:
-**1. Estandarización de Código (Prioridad Alta antes de programar):**
-- [ ] Configurar Prettier, ESLint y Husky (pre-commit) para evitar conflictos de formato y estilos de código entre los integrantes del equipo.
-
-**2. Tareas por Equipos (Paralelizables gracias al contrato `types.ts`):**
-- **Equipo UI:** 
-  - [ ] Maquetar el componente `<KeyCap />` para las teclas.
-  - [ ] Maquetar la lista interactiva de atajos usando la constante inicial.
-- **Equipo Lógica:**
-  - [ ] Crear la función pura o hook en `utils.ts` que capture `window.addEventListener('keydown')`.
-  - [ ] Crear la lógica para evaluar si las teclas presionadas coinciden con el arreglo `keys` de un atajo activo.
+## 🛤️ Pasos a seguir (Para el Integrante 2 - D2)
+1. **Lógica de Detección (D2):** Crear un archivo `utils.ts` (idealmente dentro de la feature de entrenamiento) que exporte una función pura capaz de comparar las teclas presionadas (`KeyboardEvent.key`) con el arreglo `expectedCombo` del store.
+2. **Manejo del DOM:** Crear un hook (`useShortcutListener` o similar) o integrar un `useEffect` que escuche el evento `keydown` global y prevenga el comportamiento por defecto (ej. `e.preventDefault()` al hacer `Ctrl+S`).
+3. **Conexión:** Al detectar una coincidencia o fallo, despachar la función `recordAttempt(isCorrect)` y luego llamar a `nextShortcut()`.
 
 ---
-*Nota del Tech Lead: Al hacer commit de estos primeros cambios, asegúrense de usar Conventional Commits, por ejemplo: `feat: setup base de arquitectura y contratos para shortcuts`.*
+**Nota para el equipo:** La base de datos y los contratos están fijos. ¡No modifiquen `types.ts` para agregar nuevas propiedades sin consultar, ya que esto podría romper los desafíos D4 y D5!
