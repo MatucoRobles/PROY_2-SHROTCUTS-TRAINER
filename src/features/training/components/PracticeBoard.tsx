@@ -117,6 +117,14 @@ export function PracticeBoard({ tool, reveal }: PracticeBoardProps) {
         <ShortcutCard shortcut={currentShortcut} reveal={reveal} />
       </div>
 
+      <p role="status" aria-live="assertive" className="sr-only">
+        {status === 'correct'
+          ? t('¡Correcto!')
+          : status === 'wrong'
+            ? t('Incorrecto, intentá de nuevo')
+            : ''}
+      </p>
+
       <SessionStats tool={tool} totalShortcuts={filterByTool(shortcuts, tool).length} />
 
       <button

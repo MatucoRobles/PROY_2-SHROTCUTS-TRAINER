@@ -112,7 +112,7 @@ export function TrainerHome() {
             {t('Ver mi progreso')}
           </Link>
           <p className="text-xs text-slate-500">
-            {total} {t('atajos cargados · persistencia local activa')}
+            {total} {t('atajos')} · {TOOLS.length} {t('herramientas')}
           </p>
         </footer>
       </div>

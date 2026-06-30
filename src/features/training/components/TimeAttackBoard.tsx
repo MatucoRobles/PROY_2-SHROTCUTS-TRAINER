@@ -66,7 +66,11 @@ export function TimeAttackBoard({ tool }: { tool: string }) {
 
   if (finished) {
     return (
-      <div className="w-full max-w-md flex flex-col items-center gap-4 bg-slate-900/70 light:bg-white/80 p-10 rounded-2xl border border-slate-800 light:border-slate-200 shadow-2xl">
+      <div
+        role="status"
+        aria-live="polite"
+        className="w-full max-w-md flex flex-col items-center gap-4 bg-slate-900/70 light:bg-white/80 p-10 rounded-2xl border border-slate-800 light:border-slate-200 shadow-2xl"
+      >
         <p className="text-sm uppercase tracking-[0.3em] text-slate-500">{t('¡Tiempo!')}</p>
         <p className="text-6xl font-extrabold text-sky-400 light:text-sky-600 tabular-nums">{score}</p>
         <p className="text-slate-400 light:text-slate-600">{t('aciertos')}</p>
@@ -87,12 +91,15 @@ export function TimeAttackBoard({ tool }: { tool: string }) {
       <div className="flex items-center gap-6 text-lg font-bold tabular-nums">
         <span
           className={cnTimer(timeLeft)}
+          aria-label={timeLeft <= 10 ? t('Quedan pocos segundos') : undefined}
         >
           <Timer className="w-5 h-5" aria-hidden />
           {timeLeft}s
         </span>
         <span className="inline-flex items-center gap-1.5 text-emerald-400 light:text-emerald-600">
-          ✓ {score}
+          <span aria-hidden>✓</span>
+          <span className="sr-only">{t('Aciertos')}: </span>
+          {score}
         </span>
       </div>
 

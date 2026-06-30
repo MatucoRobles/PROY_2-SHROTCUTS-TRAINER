@@ -51,6 +51,7 @@ export function FilterBar({ activeCategory }: FilterBarProps) {
             <Link
               key={cat.value}
               to={CATEGORY_ROUTES[cat.value]}
+              aria-current={activeCategory === cat.value ? 'page' : undefined}
               className={cn(
                 'px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200',
                 activeCategory === cat.value
@@ -71,6 +72,8 @@ export function FilterBar({ activeCategory }: FilterBarProps) {
           {LEVELS.map((level) => (
             <button
               key={level.label}
+              type="button"
+              aria-pressed={selectedLevel === level.value}
               onClick={() => setSelectedLevel(level.value)}
               className={cn(
                 'px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200',

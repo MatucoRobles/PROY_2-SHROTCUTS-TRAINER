@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { isMatchingCombo, normalizeKeydown, shouldPreventDefault } from '../utils';
+import { canonicalKey, isMatchingCombo, normalizeKeydown, shouldPreventDefault } from '../utils';
 import type { Shortcut } from '../types';
 
 interface UseGlobalKeydownOptions {
@@ -39,7 +39,12 @@ export function useGlobalKeydown({
 
       const matches = isMatchingCombo(pressed, shortcut.expectedCombo);
 
-      if (shouldPreventDefault(shortcut.expectedCombo)) {
+      // Solo frenamos el navegador si la tecla pulsada es parte del atajo;
+      // así no bloqueamos Tab/flechas cuando el usuario navega por teclado.
+      const involvesPressedKey = shortcut.expectedCombo.some((k) =>
+        pressed.has(canonicalKey(k)),
+      );
+      if (involvesPressedKey && shouldPreventDefault(shortcut.expectedCombo)) {
         event.preventDefault();
       }
 

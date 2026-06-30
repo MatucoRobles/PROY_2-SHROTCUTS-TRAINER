@@ -9,6 +9,7 @@ const en: Record<string, string> = {
     'shortcuts loaded · local persistence active',
   'atajo': 'shortcut',
   'atajos': 'shortcuts',
+  'herramientas': 'tools',
   'Atajos generales': 'General shortcuts',
   'Copia, pega, deshacer y guardar. La base de cualquier editor.':
     'Copy, paste, undo and save. The foundation of any editor.',
@@ -292,6 +293,19 @@ const en: Record<string, string> = {
   'Cerrar el escritorio virtual': 'Close the virtual desktop',
   'Ir al escritorio virtual anterior': 'Go to the previous virtual desktop',
   'Ir al escritorio virtual siguiente': 'Go to the next virtual desktop',
+
+  // ── Accesibilidad ──
+  'Saltar al contenido': 'Skip to content',
+  'Preferencias': 'Preferences',
+  'Combinación': 'Combination',
+  'Combinación oculta': 'Hidden combination',
+  '¡Correcto!': 'Correct!',
+  'Incorrecto, intentá de nuevo': 'Incorrect, try again',
+  'correcto': 'correct',
+  'incorrecto': 'incorrect',
+  'Modo de entrenamiento': 'Training mode',
+  'Modo de práctica': 'Practice mode',
+  'Quedan pocos segundos': 'Few seconds left',
 };
 
 export default en;

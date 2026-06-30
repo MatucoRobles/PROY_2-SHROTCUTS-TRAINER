@@ -37,11 +37,16 @@ export default function WindowsTraining() {
       <ToolHeader tool="Windows" />
       <FilterBar activeCategory="Windows" />
 
-      <div className="flex items-center gap-2 flex-wrap justify-center">
+      <div
+        role="group"
+        aria-label={t('Modo de práctica')}
+        className="flex items-center gap-2 flex-wrap justify-center"
+      >
         {WIN_MODES.map((m) => (
           <button
             key={m.value}
             type="button"
+            aria-pressed={mode === m.value}
             onClick={() => setMode(m.value)}
             className={cn(
               'px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200',

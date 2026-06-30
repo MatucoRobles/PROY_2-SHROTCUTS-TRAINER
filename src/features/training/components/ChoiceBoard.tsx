@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { Check, X } from 'lucide-react';
 import { useShortcutStore } from '../useShortcutStore';
 import { KeyCap } from '@/shared/components/KeyCap';
 import { SessionStats } from './SessionStats';
@@ -109,7 +110,7 @@ export function ChoiceBoard({ tool }: { tool: string }) {
     <div className="w-full flex flex-col items-center gap-8">
       <div className="w-full max-w-2xl flex flex-col items-center gap-8">
         <section className="w-full flex flex-col items-center gap-6 bg-slate-900/70 light:bg-white/80 p-6 sm:p-10 rounded-2xl border border-slate-800 light:border-slate-200 shadow-2xl backdrop-blur-sm">
-          <p className="text-xs uppercase tracking-[0.3em] text-slate-500">
+          <p id="choice-q" className="text-xs uppercase tracking-[0.3em] text-slate-500">
             {t('¿Qué hace este atajo?')}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
@@ -119,7 +120,11 @@ export function ChoiceBoard({ tool }: { tool: string }) {
           </div>
         </section>
 
-        <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div
+          role="group"
+          aria-labelledby="choice-q"
+          className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3"
+        >
           {options.map((desc) => {
             const isCorrect = desc === currentShortcut.description;
             const showGreen = solved && isCorrect;
@@ -138,7 +143,11 @@ export function ChoiceBoard({ tool }: { tool: string }) {
                   showRed && 'border-red-500 text-red-300 light:text-red-700 bg-red-500/10',
                 )}
               >
+                {showGreen && <Check className="inline w-4 h-4 mr-1.5 -mt-0.5" aria-hidden />}
+                {showRed && <X className="inline w-4 h-4 mr-1.5 -mt-0.5" aria-hidden />}
                 {t(desc)}
+                {showGreen && <span className="sr-only"> — {t('correcto')}</span>}
+                {showRed && <span className="sr-only"> — {t('incorrecto')}</span>}
               </button>
             );
           })}

@@ -86,19 +86,26 @@ export function ShortcutCard({ shortcut, reveal = true }: ShortcutCardProps) {
   }, [expectedNorm]);
 
   return (
-    <section
-      aria-live="polite"
-      className="w-full max-w-4xl mx-auto flex flex-col items-center gap-8 bg-slate-900/70 light:bg-white/80 p-6 sm:p-10 rounded-2xl border border-slate-800 light:border-slate-200 shadow-2xl backdrop-blur-sm"
-    >
+    <section className="w-full max-w-4xl mx-auto flex flex-col items-center gap-8 bg-slate-900/70 light:bg-white/80 p-6 sm:p-10 rounded-2xl border border-slate-800 light:border-slate-200 shadow-2xl backdrop-blur-sm">
       <p className="text-xs uppercase tracking-[0.3em] text-slate-500">
         {t('Atajo a ejecutar')}
       </p>
 
-      <h2 className="text-2xl md:text-3xl font-semibold text-slate-100 light:text-slate-900 text-center">
+      <h2
+        aria-live="polite"
+        className="text-2xl md:text-3xl font-semibold text-slate-100 light:text-slate-900 text-center"
+      >
         {t(shortcut.description)}
       </h2>
 
-      <div className="flex flex-wrap items-center justify-center gap-3">
+      <div
+        className="flex flex-wrap items-center justify-center gap-3"
+        aria-label={
+          reveal
+            ? `${t('Combinación')}: ${shortcut.expectedCombo.map(formatKeyLabel).join(' + ')}`
+            : t('Combinación oculta')
+        }
+      >
         {shortcut.expectedCombo.map((key, index) => (
           <KeyCap
             key={`${key}-${index}`}

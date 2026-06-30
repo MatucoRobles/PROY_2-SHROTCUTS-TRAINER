@@ -15,11 +15,16 @@ export function ModeSelector() {
   const setMode = useModeStore((s) => s.setMode);
 
   return (
-    <div className="flex items-center gap-2 flex-wrap justify-center">
+    <div
+      role="group"
+      aria-label={t('Modo de entrenamiento')}
+      className="flex items-center gap-2 flex-wrap justify-center"
+    >
       {MODES.map((m) => (
         <button
           key={m.value}
           type="button"
+          aria-pressed={mode === m.value}
           onClick={() => setMode(m.value)}
           className={cn(
             'px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200',
