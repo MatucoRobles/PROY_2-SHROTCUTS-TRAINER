@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { Moon, Sun } from 'lucide-react';
 import { useThemeStore } from './useThemeStore';
 import { useTranslation } from '@/features/translation/useTranslation';
@@ -17,11 +17,13 @@ export function ThemeToggle() {
   const mode = useThemeStore((s) => s.mode);
   const toggle = useThemeStore((s) => s.toggle);
   const isDark = mode === 'dark';
+  const reduceMotion = useReducedMotion();
 
   return (
     <button
       type="button"
       onClick={toggle}
+      aria-pressed={isDark}
       aria-label={
         isDark
           ? t('Tema actual: oscuro. Click para cambiar.')
@@ -36,7 +38,7 @@ export function ThemeToggle() {
           initial={{ rotate: -90, opacity: 0, scale: 0.4 }}
           animate={{ rotate: 0, opacity: 1, scale: 1 }}
           exit={{ rotate: 90, opacity: 0, scale: 0.4 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: reduceMotion ? 0 : 0.2 }}
           className="inline-flex"
         >
           {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}

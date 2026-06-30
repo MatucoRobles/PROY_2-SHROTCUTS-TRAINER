@@ -75,6 +75,7 @@ export function SessionStats(_props: SessionStatsProps) {
         <div className="h-1.5 w-full bg-slate-700 light:bg-slate-300 rounded-full overflow-hidden">
           <div
             role="progressbar"
+            aria-label={t("Precisión")}
             aria-valuenow={accuracy}
             aria-valuemin={0}
             aria-valuemax={100}

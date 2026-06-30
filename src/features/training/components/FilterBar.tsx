@@ -3,6 +3,7 @@ import { cn } from '@/shared/utils/cn';
 import { useShortcutStore } from '../useShortcutStore';
 import { useTranslation } from '@/features/translation/useTranslation';
 import { TOOLS } from '../tools';
+import { PillToggle } from '@/shared/components/PillToggle';
 
 /**
  * Barra de filtros unificada para categorías y niveles.
@@ -70,20 +71,14 @@ export function FilterBar({ activeCategory }: FilterBarProps) {
         {/* Bloque de Niveles */}
         <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
           {LEVELS.map((level) => (
-            <button
+            <PillToggle
               key={level.label}
-              type="button"
-              aria-pressed={selectedLevel === level.value}
+              variant="neutral"
+              active={selectedLevel === level.value}
               onClick={() => setSelectedLevel(level.value)}
-              className={cn(
-                'px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200',
-                selectedLevel === level.value
-                  ? 'bg-slate-700/80 light:bg-slate-200 border border-slate-500/70 light:border-slate-400 text-slate-100 light:text-slate-900'
-                  : 'bg-transparent border border-slate-700/50 light:border-slate-300 text-slate-400 light:text-slate-500 hover:border-slate-500 light:hover:border-slate-400 hover:text-slate-200 light:hover:text-slate-700'
-              )}
             >
               {t(level.label)}
-            </button>
+            </PillToggle>
           ))}
         </div>
       </div>

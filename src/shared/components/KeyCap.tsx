@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { cn } from '@/shared/utils/cn';
 
 type KeyCapVariant = 'light' | 'dark';
@@ -99,6 +99,7 @@ function KeyGlow({ variant }: { variant: KeyCapVariant }) {
  * presionada.
  */
 export function KeyCap({ char, variant = 'light', active = false, className }: KeyCapProps) {
+  const reduceMotion = useReducedMotion();
   return (
     <kbd
       className={cn(
@@ -110,7 +111,7 @@ export function KeyCap({ char, variant = 'light', active = false, className }: K
       )}
     >
       <AnimatePresence>
-        {active && <KeyGlow key="glow" variant={variant} />}
+        {active && !reduceMotion && <KeyGlow key="glow" variant={variant} />}
       </AnimatePresence>
       <span className="relative z-10">{char}</span>
     </kbd>

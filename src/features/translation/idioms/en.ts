@@ -297,6 +297,7 @@ const en: Record<string, string> = {
   // ── Accesibilidad ──
   'Saltar al contenido': 'Skip to content',
   'Preferencias': 'Preferences',
+  'Navegación': 'Navigation',
   'Combinación': 'Combination',
   'Combinación oculta': 'Hidden combination',
   '¡Correcto!': 'Correct!',

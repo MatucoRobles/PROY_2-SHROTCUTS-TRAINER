@@ -48,7 +48,7 @@ export function ToolHeader({ tool }: ToolHeaderProps) {
       </div>
 
       {/* Sección derecha: toggles + Progreso */}
-      <div className="flex items-center gap-2 shrink-0">
+      <nav aria-label={t('Navegación')} className="flex items-center gap-2 shrink-0">
         <LanguageToggle />
         <ThemeToggle />
         <Link
@@ -63,7 +63,7 @@ export function ToolHeader({ tool }: ToolHeaderProps) {
           <BarChart2 className="w-4 h-4" aria-hidden />
           <span className="hidden sm:inline">{t('Progreso')}</span>
         </Link>
-      </div>
+      </nav>
     </header>
   );
 }

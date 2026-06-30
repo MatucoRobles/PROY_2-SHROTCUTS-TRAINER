@@ -65,12 +65,13 @@ export function ProgressPage() {
             </p>
           ) : (
             <table className="w-full text-sm">
+              <caption className="sr-only">{t('Récords por herramienta')}</caption>
               <thead>
                 <tr className="text-[10px] uppercase tracking-widest text-slate-500 border-b border-slate-800 light:border-slate-200">
-                  <th className="text-left px-4 py-2">{t('Herramienta')}</th>
-                  <th className="text-left px-3 py-2">{t('Mejor T.')}</th>
-                  <th className="text-left px-3 py-2">{t('Racha')}</th>
-                  <th className="text-left px-3 py-2 hidden sm:table-cell">
+                  <th scope="col" className="text-left px-4 py-2">{t('Herramienta')}</th>
+                  <th scope="col" className="text-left px-3 py-2">{t('Mejor T.')}</th>
+                  <th scope="col" className="text-left px-3 py-2">{t('Racha')}</th>
+                  <th scope="col" className="text-left px-3 py-2 hidden sm:table-cell">
                     {t('Precisión')}
                   </th>
                 </tr>
@@ -115,6 +116,7 @@ export function ProgressPage() {
                           <div className="flex-1 h-1.5 bg-slate-700 light:bg-slate-300 rounded-full overflow-hidden">
                             <div
                               role="progressbar"
+                              aria-label={`${t('Precisión')}: ${record.tool}`}
                               aria-valuenow={accuracy}
                               aria-valuemin={0}
                               aria-valuemax={100}

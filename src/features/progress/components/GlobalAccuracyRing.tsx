@@ -1,14 +1,21 @@
+import { useTranslation } from '@/features/translation/useTranslation';
+
 interface GlobalAccuracyRingProps {
   value: number;
 }
 
 export function GlobalAccuracyRing({ value }: GlobalAccuracyRingProps) {
+  const { t } = useTranslation();
   const radius = 54;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (value / 100) * circumference;
 
   return (
-    <div className="relative w-52 h-52 flex items-center justify-center">
+    <div
+      role="img"
+      aria-label={`${t('Precisión global')}: ${value}%`}
+      className="relative w-52 h-52 flex items-center justify-center"
+    >
       <svg
         viewBox="0 0 120 120"
         className="w-full h-full -rotate-90"

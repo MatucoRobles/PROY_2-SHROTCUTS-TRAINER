@@ -49,6 +49,13 @@
           }
           if (mode === 'light') document.documentElement.classList.add('light');
         } catch (e) {}
+        try {
+          var langRaw = localStorage.getItem('shortcuts-trainer-language-storage');
+          if (langRaw) {
+            var lang = JSON.parse(langRaw).state.language;
+            if (lang) document.documentElement.lang = lang;
+          }
+        } catch (e) {}
       })();
     </script>
     <div id="root"></div>

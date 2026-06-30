@@ -57,7 +57,7 @@ export function ShortcutPracticeVisual({
         </p>
       )}
 
-      <div className="flex items-start gap-3 bg-amber-900/20 light:bg-amber-50 border border-amber-600/40 light:border-amber-500/40 rounded-xl px-5 py-4 max-w-xl">
+      <div role="note" className="flex items-start gap-3 bg-amber-900/20 light:bg-amber-50 border border-amber-600/40 light:border-amber-500/40 rounded-xl px-5 py-4 max-w-xl">
         <AlertTriangle className="w-5 h-5 text-amber-400 light:text-amber-600 shrink-0 mt-0.5" aria-hidden />
         <div className="text-sm text-amber-200 light:text-amber-900 leading-relaxed">
           <p className="font-semibold">{t('⚠️ Estos atajos son peligrosos')}</p>
@@ -81,7 +81,7 @@ export function ShortcutPracticeVisual({
           {t('Anterior')}
         </button>
 
-        <span className="text-slate-400 light:text-slate-600 text-sm tabular-nums">
+        <span aria-live="polite" className="text-slate-400 light:text-slate-600 text-sm tabular-nums">
           {index + 1} / {total}
         </span>
 

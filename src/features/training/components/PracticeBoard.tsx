@@ -62,7 +62,9 @@ export function PracticeBoard({ tool, reveal }: PracticeBoardProps) {
     const prev = prevStreakRef.current;
     if (currentStreak > prev && currentStreak > 0 && currentStreak % 10 === 0) {
       fireStreakConfetti();
-      toast.success(`🔥 ${currentStreak}`, { description: t('¡Estás imparable!') });
+      toast.success(`🔥 ${t('Racha')} ${currentStreak}`, {
+        description: t('¡Estás imparable!'),
+      });
     }
     prevStreakRef.current = currentStreak;
   }, [currentStreak, t]);
